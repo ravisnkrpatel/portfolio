@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="192x192" href="https://ravishankarpatel.in/favicon.png"/>
-<link rel="apple-touch-icon" href="https://ravishankarpatel.in/favicon.png"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='42' font-family='-apple-system,BlinkMacSystemFont,sans-serif' font-size='32' font-weight='600' fill='%23ededed' text-anchor='middle' letter-spacing='-1'%3Erp%3C/text%3E%3Ccircle cx='48' cy='44' r='3.5' fill='%235cffa9'/%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230a0a0a'/%3E%3Ctext x='90' y='118' font-family='-apple-system,BlinkMacSystemFont,sans-serif' font-size='90' font-weight='600' fill='%23ededed' text-anchor='middle' letter-spacing='-3'%3Erp%3C/text%3E%3Ccircle cx='136' cy='124' r='10' fill='%235cffa9'/%3E%3C/svg%3E"/>
 <meta name="description" content="Ravishankar Patel P S — ECE Diploma student. Siemens COE intern at NITK Surathkal."/>
 <meta property="og:title" content="Ravishankar Patel"/>
 <meta property="og:description" content="ECE student. Industrial automation, PLC, embedded systems."/>
@@ -105,7 +105,7 @@ nav.main-nav{
   transition:background .3s;
 }
 .nav-brand:hover{background:var(--surface)}
-.nav-brand-icon{width:14px;height:14px;display:flex;align-items:center;justify-content:center}
+.nav-brand-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
 .nav-divider{width:1px;height:18px;background:var(--border);margin:0 .35rem}
 .nav-links{display:flex;align-items:center;gap:0;list-style:none}
 .nav-links a{
@@ -132,10 +132,6 @@ nav.main-nav{
   .nav-divider{display:none}
 }
 
-#home{
-  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  max-width:1100px;margin:0 auto;padding:8rem 2rem 4rem;position:relative;
-}
 .eyebrow{
   font-family:'JetBrains Mono',monospace;
   font-size:.7rem;font-weight:400;
@@ -148,6 +144,16 @@ nav.main-nav{
   font-weight:600;line-height:.92;
   letter-spacing:-.045em;color:var(--fg);
   margin-bottom:2.5rem;
+}
+.pulse-dot{
+  color:#5cffa9;
+  display:inline-block;
+  animation:pulse-dot 2s ease-in-out infinite;
+  text-shadow:0 0 24px rgba(92,255,169,.6);
+}
+@keyframes pulse-dot{
+  0%,100%{opacity:.55}
+  50%{opacity:1}
 }
 .hero-tag{
   font-size:1.05rem;line-height:1.5;
@@ -175,7 +181,25 @@ nav.main-nav{
 }
 [data-theme="light"] .pill-btn:hover{border-color:rgba(10,10,10,.18)}
 
-section.content{max-width:1100px;margin:0 auto;padding:6rem 2rem}
+section.content{max-width:1100px;margin:0 auto;padding:6rem 2rem;width:100%}
+#home{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-start;
+  max-width:1100px;margin:0 auto;padding:8rem 2rem 4rem;position:relative;width:100%;
+}
+#home > *{max-width:100%}
+footer{
+  max-width:1100px;margin:0 auto;width:100%;
+  padding:3rem 2rem 2.5rem;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:center;align-items:center;
+}
+.foot-center{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;
+  color:var(--fg-muted);
+  letter-spacing:.06em;
+}
 @media (max-width:640px){
   section.content{padding:4rem 1.5rem}
   #home{padding:7rem 1.5rem 3rem}
@@ -199,10 +223,11 @@ section.content{max-width:1100px;margin:0 auto;padding:6rem 2rem}
 .about-text p{margin-bottom:1.4rem}
 .about-text strong{color:var(--fg);font-weight:500}
 .about-meta{
-  margin-top:3rem;display:grid;grid-template-columns:repeat(2,1fr);
-  gap:0;max-width:640px;border-top:1px solid var(--border);
+  margin-top:3rem;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:2rem;row-gap:0;
+  max-width:640px;border-top:1px solid var(--border);
 }
-@media (max-width:520px){.about-meta{grid-template-columns:1fr}}
+@media (max-width:520px){.about-meta{grid-template-columns:1fr;column-gap:0}}
 .meta-row{
   display:flex;justify-content:space-between;
   padding:1rem 0;border-bottom:1px solid var(--border);
@@ -233,8 +258,13 @@ section.content{max-width:1100px;margin:0 auto;padding:6rem 2rem}
 }
 .work-link:hover{color:var(--fg)}
 @media (max-width:600px){
-  .work-item{grid-template-columns:4rem 1fr;gap:1rem}
-  .work-link{display:none}
+  .work-item{grid-template-columns:3rem 1fr;gap:.8rem}
+  .work-link{
+    grid-column:1 / -1;
+    padding-top:0;
+    margin-top:.4rem;
+    font-size:.65rem;
+  }
 }
 
 .stack-grid{
@@ -438,13 +468,6 @@ section.content{max-width:1100px;margin:0 auto;padding:6rem 2rem}
 .auth-btn:hover{opacity:.9;transform:translateY(-1px)}
 .auth-btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
 
-footer{
-  max-width:1100px;margin:0 auto;
-  padding:3rem 2rem 2.5rem;
-  border-top:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:1rem;
-}
 .foot-brand{font-size:.85rem;font-weight:500;letter-spacing:-.01em}
 .foot-meta{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--fg-muted);letter-spacing:.06em}
 
@@ -473,9 +496,10 @@ footer{
 <nav class="main-nav" id="mainNav">
   <a href="#home" class="nav-brand">
     <span class="nav-brand-icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9.5L12 3l9 6.5"/>
-        <path d="M5 9v11h14V9"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="5" fill="currentColor" opacity="0.08"/>
+        <text x="12" y="16" font-family="-apple-system,sans-serif" font-size="12" font-weight="600" fill="currentColor" text-anchor="middle" letter-spacing="-0.5">rp</text>
+        <circle cx="18" cy="16" r="1.4" fill="#5cffa9"/>
       </svg>
     </span>
     Ravishankar Patel
@@ -483,7 +507,7 @@ footer{
   <div class="nav-divider"></div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#building">Journey</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -511,7 +535,7 @@ footer{
 
 <section id="home">
   <div class="eyebrow">ECE STUDENT · BUILDER</div>
-  <h1 class="hero-name">ravisnkr<br>patel.</h1>
+  <h1 class="hero-name">ravisnkr<br>patel<span class="pulse-dot">.</span></h1>
   <p class="hero-tag">I’m interested in automation systems, embedded devices, and PCB design, and I’m studying Electronics &amp; Communication Engg.</p>
   <div class="hero-pills">
     <button class="pill-btn" onclick="openAuth('gmail')">mail</button>
@@ -534,6 +558,7 @@ footer{
     <div class="meta-row"><span class="meta-label">based in</span><span class="meta-value">Karnataka, IN</span></div>
     <div class="meta-row"><span class="meta-label">study</span><span class="meta-value">Diploma ECE</span></div>
     <div class="meta-row"><span class="meta-label">graduating</span><span class="meta-value">June 2026</span></div>
+    <div class="meta-row"><span class="meta-label">status</span><span class="meta-value">Open to work</span></div>
   </div>
   <div class="index-strip rv">
     <button class="index-item" onclick="openModal('certsModal')">
@@ -551,10 +576,10 @@ footer{
   </div>
 </section>
 
-<section id="work" class="content">
+<section id="projects" class="content">
   <div class="section-header rv">
     <span class="section-num">02</span>
-    <h2 class="section-title">work</h2>
+    <h2 class="section-title">projects</h2>
   </div>
   <div class="work-list rv">
     <div class="work-item">
@@ -687,8 +712,7 @@ footer{
 </section>
 
 <footer>
-  <div class="foot-brand">ravisnkr.patel</div>
-  <div class="foot-meta">© 2026 · Karnataka, IN · <span id="footClock">--:--</span></div>
+  <div class="foot-center">© 2026 · ravisnkr.patel</div>
 </footer>
 
 <div class="modal" id="certsModal">
@@ -748,6 +772,23 @@ footer{
         <div class="soc" style="cursor:default"><span class="soc-abbr">01</span><div class="soc-meta"><div class="soc-platform">1st Place · Engineering Quiz</div><div class="soc-handle">GM University, Davangere</div></div></div>
         <div class="soc" style="cursor:default"><span class="soc-abbr">02</span><div class="soc-meta"><div class="soc-platform">2nd Place · Paper Presentation</div><div class="soc-handle">Karnataka Govt. Polytechnic, Mangalore</div></div></div>
         <div class="soc" style="cursor:default"><span class="soc-abbr">03</span><div class="soc-meta"><div class="soc-platform">Internship Completion</div><div class="soc-handle">Siemens COE · NITK Surathkal · Digital Manufacturing</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="revealModal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <span class="modal-title">Verified ✓</span>
+      <button class="modal-close" onclick="closeModal('revealModal')">✕</button>
+    </div>
+    <div class="modal-body" style="padding:2rem 1.6rem;text-align:center">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:.8rem" id="revealLabel">Gmail</div>
+      <div style="font-size:1.15rem;font-weight:500;letter-spacing:-.01em;word-break:break-all;margin-bottom:1.6rem" id="revealValue">—</div>
+      <div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap">
+        <button class="pill-btn" onclick="copyReveal()" id="copyBtn">copy</button>
+        <button class="pill-btn" onclick="openRevealApp()" id="openBtn">open</button>
       </div>
     </div>
   </div>
@@ -829,14 +870,6 @@ window.addEventListener('scroll',()=>{
       obs.observe(el);
     }
   });
-})();
-
-(function(){
-  const el=document.getElementById('footClock');
-  function tick(){
-    el.textContent=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'})+' IST';
-  }
-  tick();setInterval(tick,30000);
 })();
 
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
@@ -957,15 +990,44 @@ function checkMath(){
     return;
   }
   const target=authTarget;
-  revealDisplay(target);
   closeAuth();
-  if(target==='resume')setTimeout(()=>window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf','_blank'),300);
+  if(target==='resume'){
+    setTimeout(()=>window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf','_blank'),300);
+  } else {
+    setTimeout(()=>showReveal(target),300);
+  }
 }
-function revealDisplay(t){
+
+let _revealVal='', _revealType='';
+function showReveal(t){
   const val=window.__revealContact(t);
-  if(!val){document.getElementById('mathErr').textContent='Verification failed.';return;}
-  const el=document.getElementById(t+'-display');
-  if(el)el.textContent=val;
+  if(!val){alert('Verification failed. Please try again.');return;}
+  _revealVal=val;_revealType=t;
+  const labels={phone:'Phone',gmail:'Gmail',icloud:'iCloud Mail'};
+  document.getElementById('revealLabel').textContent=labels[t]||t;
+  document.getElementById('revealValue').textContent=val;
+  // Also update the inline contact rows in contact section
+  const inline=document.getElementById(t+'-display');
+  if(inline)inline.textContent=val;
+  openModal('revealModal');
+}
+function copyReveal(){
+  if(!_revealVal)return;
+  navigator.clipboard.writeText(_revealVal).then(()=>{
+    const b=document.getElementById('copyBtn');
+    const old=b.textContent;b.textContent='copied ✓';
+    setTimeout(()=>b.textContent=old,1400);
+  }).catch(()=>{
+    const t=document.createElement('input');t.value=_revealVal;
+    document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();
+    const b=document.getElementById('copyBtn');b.textContent='copied ✓';
+    setTimeout(()=>b.textContent='copy',1400);
+  });
+}
+function openRevealApp(){
+  if(!_revealVal)return;
+  if(_revealType==='phone')window.location.href='tel:'+_revealVal.replace(/\s+/g,'');
+  else window.location.href='mailto:'+_revealVal;
 }
 document.getElementById('authOverlay').addEventListener('click',function(e){if(e.target===this)closeAuth();});
 document.getElementById('phone-link').addEventListener('click',()=>openAuth('phone'));
