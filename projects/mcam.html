@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>MCAM — Motion Camera with Autonomous Mobility — Ravishankar Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Crect x='240' y='232' width='38' height='38' fill='%233dffa3'/%3E%3C/svg%3E"/>
+<meta name="description" content="Motion-detecting security drone integrated with wireless surveillance and solar self-charging. Stays inactive until motion is detected, then records and transmits in real-time. Scalable across border security, agriculture, industrial sites, and smart homes."/>
+<meta property="og:title" content="MCAM — Motion Camera with Autonomous Mobility — Ravishankar Patel"/>
+<meta property="og:description" content="Motion-detecting security drone integrated with wireless surveillance and solar self-charging. Stays inactive until motion is detected, then records and transmits in real-time. Scalable across border security, agriculture, industrial sites, and smart homes."/>
+<meta property="og:url" content="https://ravishankarpatel.in/projects/mcam.html"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "MCAM — Motion Camera with Autonomous Mobility",
+  "description": "Motion-detecting security drone integrated with wireless surveillance and solar self-charging. Stays inactive until motion is detected, then records and transmits in real-time. Scalable across border security, agriculture, industrial sites, and smart homes.",
+  "author": {
+    "@type": "Person",
+    "name": "Ravishankar Patel P S",
+    "url": "https://ravishankarpatel.in"
+  },
+  "datePublished": "2024",
+  "url": "https://ravishankarpatel.in/projects/mcam.html",
+  "keywords": "security drone, motion detection, solar powered, autonomous, surveillance, IoT, defense"
+}
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--fg:#ededed;
+  --fg-soft:rgba(237,237,237,.7);
+  --fg-muted:rgba(237,237,237,.4);
+  --fg-faint:rgba(237,237,237,.18);
+  --border:rgba(237,237,237,.08);
+  --surface:rgba(237,237,237,.04);
+  --surface-2:rgba(237,237,237,.06);
+  --accent:#3dffa3;
+}
+[data-theme="light"]{
+  --bg:#fafafa;--fg:#0a0a0a;
+  --fg-soft:rgba(10,10,10,.68);
+  --fg-muted:rgba(10,10,10,.45);
+  --fg-faint:rgba(10,10,10,.14);
+  --border:rgba(10,10,10,.08);
+  --surface:rgba(10,10,10,.03);
+  --surface-2:rgba(10,10,10,.06);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Geist',-apple-system,system-ui,sans-serif;
+  font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  transition:background .35s,color .35s;
+}
+::selection{background:var(--fg);color:var(--bg)}
+
+.back-link{
+  position:fixed;top:1.4rem;left:1.4rem;
+  z-index:100;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.55rem 1.1rem;
+  background:rgba(20,20,20,.65);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(237,237,237,.08);
+  border-radius:999px;
+  color:var(--fg-soft);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.06em;
+  text-decoration:none;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+[data-theme="light"] .back-link{
+  background:rgba(250,250,250,.78);
+  border-color:rgba(10,10,10,.06);
+}
+.back-link:hover{
+  color:var(--fg);
+  border-color:rgba(237,237,237,.18);
+  transform:translateX(-2px);
+}
+
+main{
+  max-width:840px;margin:0 auto;
+  padding:7rem 2rem 6rem;
+}
+@media (max-width:640px){main{padding:6rem 1.4rem 4rem}}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fg-muted);
+  margin-bottom:1.4rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.eyebrow .tag{
+  padding:.25rem .7rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--accent);
+  font-size:.6rem;
+}
+
+h1.proj-title{
+  font-family:'Geist',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:600;line-height:.95;
+  letter-spacing:-.035em;
+  margin-bottom:1.4rem;
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fade-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.proj-tagline{
+  font-size:1.15rem;line-height:1.55;
+  color:var(--fg-soft);
+  margin-bottom:3rem;
+  max-width:620px;
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) .15s both;
+}
+
+.proj-meta{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  margin-bottom:3.5rem;
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) .3s both;
+}
+.meta-cell{
+  padding:1.1rem 1.2rem;
+  border-right:1px solid var(--border);
+}
+.meta-cell:last-child{border-right:none}
+@media (max-width:520px){
+  .meta-cell{border-right:none;border-bottom:1px solid var(--border)}
+  .meta-cell:last-child{border-bottom:none}
+}
+.meta-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fg-muted);
+  margin-bottom:.3rem;
+}
+.meta-value{font-size:.92rem;font-weight:500}
+
+section.block{
+  margin-bottom:3.5rem;
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) .45s both;
+}
+h2.block-title{
+  font-family:'Geist',sans-serif;
+  font-size:1.5rem;font-weight:500;
+  letter-spacing:-.02em;
+  margin-bottom:1.2rem;
+  display:flex;align-items:baseline;gap:.9rem;
+  padding-bottom:.8rem;
+  border-bottom:1px solid var(--border);
+}
+.block-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--fg-muted);
+}
+
+.prose p{
+  font-size:1rem;line-height:1.75;
+  color:var(--fg-soft);
+  margin-bottom:1.1rem;
+  max-width:680px;
+}
+.prose strong{color:var(--fg);font-weight:500}
+.prose ul{
+  list-style:none;
+  margin-bottom:1.2rem;
+}
+.prose li{
+  position:relative;
+  padding-left:1.4rem;
+  font-size:.95rem;
+  line-height:1.7;
+  color:var(--fg-soft);
+  margin-bottom:.6rem;
+}
+.prose li::before{
+  content:'';
+  position:absolute;
+  left:0;top:.65em;
+  width:6px;height:6px;
+  background:var(--accent);
+  border-radius:1px;
+}
+
+.tech-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+.tech-cell{
+  background:var(--bg);
+  padding:1.1rem 1.2rem;
+}
+.tech-name{
+  font-size:.88rem;font-weight:500;
+  margin-bottom:.2rem;
+  letter-spacing:-.01em;
+}
+.tech-role{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;
+  color:var(--fg-muted);
+  letter-spacing:.04em;
+}
+
+.cta-bar{
+  display:flex;gap:.6rem;flex-wrap:wrap;
+  margin-top:4rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border);
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) .6s both;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.7rem 1.3rem;
+  background:var(--fg);color:var(--bg);
+  border:none;border-radius:999px;
+  font-family:inherit;font-size:.78rem;font-weight:500;
+  letter-spacing:-.005em;
+  text-decoration:none;cursor:pointer;
+  transition:opacity .2s,transform .2s;
+}
+.cta-btn:hover{opacity:.85;transform:translateY(-1px)}
+.cta-btn.outline{
+  background:transparent;color:var(--fg);
+  border:1px solid var(--border);
+}
+.cta-btn.outline:hover{border-color:var(--fg)}
+
+.related{
+  margin-top:5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border);
+}
+.related-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--fg-muted);
+  margin-bottom:1.2rem;
+}
+.related-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+}
+.related-item{
+  display:block;
+  padding:1.2rem 1.3rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  text-decoration:none;
+  color:var(--fg);
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+.related-item:hover{
+  background:var(--surface-2);
+  border-color:rgba(237,237,237,.18);
+  transform:translateY(-2px);
+}
+[data-theme="light"] .related-item:hover{border-color:rgba(10,10,10,.18)}
+.related-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;color:var(--fg-muted);
+  letter-spacing:.05em;
+  margin-bottom:.5rem;
+}
+.related-name{
+  font-size:.95rem;font-weight:500;
+  letter-spacing:-.01em;
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-link">← Back</a>
+
+<main>
+  <div class="eyebrow">
+    <span>Project 02</span>
+    <span class="tag">Drones · Security</span>
+  </div>
+  <h1 class="proj-title">MCAM — Motion Camera with Autonomous Mobility</h1>
+  <p class="proj-tagline">A motion-activated security drone with solar self-charging and autonomous deployment on threat detection.</p>
+
+  <div class="proj-meta">
+    <div class="meta-cell">
+      <div class="meta-label">Year</div>
+      <div class="meta-value">2024</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Domain</div>
+      <div class="meta-value">Security · Drones</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Status</div>
+      <div class="meta-value">Concept prototype</div>
+    </div>
+    <div class="meta-cell">
+      <div class="meta-label">Role</div>
+      <div class="meta-value">System design</div>
+    </div>
+  </div>
+
+  <section class="block">
+    <h2 class="block-title"><span class="block-num">01</span>The Problem</h2>
+    <div class="prose">
+      <p>Traditional CCTV needs continuous power, blind spots are everywhere, and conventional surveillance drones drain batteries fast — they're useless when you need them most.</p>
+            <p>What if a drone could stay <strong>idle and weather-proof</strong>, charge itself in the sun, and only launch when something actually happens?</p>
+    </div>
+  </section>
+<section class="block">
+    <h2 class="block-title"><span class="block-num">02</span>The Approach</h2>
+    <div class="prose">
+      <p>MCAM (Motion Camera with Autonomous Mobility) combines three ideas into one platform:</p>
+            <ul>
+              <li><strong>PIR motion detection</strong> as the always-on trigger — extremely low power, only fires when there's actual movement</li>
+              <li><strong>Solar self-charging dock</strong> — drone stays parked and charging until needed, sometimes for days</li>
+              <li><strong>Autonomous deployment</strong> — on trigger, drone launches, captures footage, transmits wirelessly, and returns to dock</li>
+            </ul>
+            <p>The result: continuous monitoring of a wide area, with the drone only flying when something is worth recording.</p>
+    </div>
+  </section>
+<section class="block">
+    <h2 class="block-title"><span class="block-num">03</span>Use Cases</h2>
+    <div class="prose">
+      <ul>
+              <li><strong>Border security</strong> — patrolling fences over kilometers with minimal infrastructure</li>
+              <li><strong>Agricultural protection</strong> — protecting crops from wild animals at night without false alarms</li>
+              <li><strong>Industrial perimeter</strong> — securing factories and warehouses after-hours</li>
+              <li><strong>Smart homes</strong> — bigger properties where standard cameras can't cover everything</li>
+            </ul>
+    </div>
+  </section>
+<section class="block">
+    <h2 class="block-title"><span class="block-num">04</span>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-cell"><div class="tech-name">ESP32</div><div class="tech-role">Main controller + WiFi</div></div>
+      <div class="tech-cell"><div class="tech-name">PIR Sensor</div><div class="tech-role">Motion detection</div></div>
+      <div class="tech-cell"><div class="tech-name">Solar Panel</div><div class="tech-role">Self-charging dock</div></div>
+      <div class="tech-cell"><div class="tech-name">Camera Module</div><div class="tech-role">Wireless recording</div></div>
+      <div class="tech-cell"><div class="tech-name">Custom Frame</div><div class="tech-role">Lightweight drone body</div></div>
+      <div class="tech-cell"><div class="tech-name">LiPo Battery</div><div class="tech-role">Flight power</div></div>
+    </div>
+  </section>
+
+
+  <div class="cta-bar">
+    <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_fe63978ed28e44f0b7522226f7759fe3.pdf" target="_blank" class="cta-btn">Read full report ↗</a>
+    <a href="../index.html#projects" class="cta-btn outline">More projects</a>
+  </div>
+
+  <div class="related">
+    <div class="related-label">Other projects</div>
+    <div class="related-list">
+      <a href="medicine-dispenser.html" class="related-item"><div class="related-year">2024 · Healthcare</div><div class="related-name">Automated Medicine Dispenser</div></a>
+      <a href="advance-trends-ece.html" class="related-item"><div class="related-year">2024 · Research</div><div class="related-name">Advance Trends in ECE</div></a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const t = localStorage.getItem('psr-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+</body>
+</html>
