@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Crect x='240' y='232' width='38' height='38' fill='%233dffa3'/%3E%3C/svg%3E"/>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Crect x='240' y='232' width='38' height='38' fill='%233dffa3'/%3E%3C/svg%3E"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Ccircle cx='259' cy='251' r='19' fill='%233dffa3'/%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Ccircle cx='259' cy='251' r='19' fill='%233dffa3'/%3E%3C/svg%3E"/>
 <meta name="description" content="Ravishankar Patel P S — ECE Diploma student. Siemens COE intern at NITK Surathkal."/>
 <meta property="og:title" content="Ravishankar Patel"/>
 <meta property="og:description" content="ECE student. Industrial automation, PLC, embedded systems."/>
@@ -80,11 +80,11 @@
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "ravisnkr.portfolio",
+  "name": "Ravishankar Patel — Portfolio",
   "url": "https://ravishankarpatel.in",
   "author": {
     "@type": "Person",
-    "name": "ravisnkr.patel"
+    "name": "Ravishankar Patel P S"
   },
   "inLanguage": "en-IN"
 }
@@ -561,6 +561,7 @@ footer{
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+.no-intro .hero-name,.no-intro .eyebrow,.no-intro .hero-tag,.no-intro .hero-pills{animation:none!important;opacity:1!important;transform:none!important}
 </style>
 </head>
 <body class="loading">
@@ -574,7 +575,7 @@ footer{
       <svg width="22" height="22" viewBox="0 0 400 400" fill="none">
         <rect width="400" height="400" rx="60" fill="#000000"/>
         <text x="155" y="270" font-family="Helvetica Neue,Arial,sans-serif" font-size="280" font-weight="700" fill="#e8e8e8" letter-spacing="-10">r</text>
-        <rect x="240" y="232" width="38" height="38" fill="#3dffa3"/>
+        <circle cx="259" cy="251" r="19" fill="#3dffa3"/>
       </svg>
     </span>
     Ravishankar Patel
@@ -662,7 +663,7 @@ footer{
         <div class="work-title">Automated Medicine Dispenser</div>
         <p class="work-desc">QR-driven dispensing system using servo control for accurate, timely delivery in clinics, pharmacies, and home care.</p>
       </div>
-      <button class="work-link" style="background:none;border:none;cursor:pointer;padding:0" onclick="openModal('amdModal')">Report ↗</button>
+      <a href="projects/medicine-dispenser.html" class="work-link">Case study ↗</a>
     </div>
     <div class="work-item">
       <div class="work-year">2024</div>
@@ -762,7 +763,7 @@ footer{
       </button>
       <button class="contact-row" id="gmail-link">
         <div class="contact-row-meta">
-          <span class="contact-row-label">gmail</span>
+          <span class="contact-row-label">email</span>
           <span class="contact-row-value" id="gmail-display">tap to reveal</span>
         </div>
         <span class="contact-row-arrow">↗</span>
@@ -868,256 +869,7 @@ footer{
   </div>
 </div>
 
-<!-- ── AMD Project Modal ─────────────────────────────────── -->
-<style>
-#amdModal .amd-s{padding:1.5rem 1.6rem;border-bottom:1px solid var(--border)}
-#amdModal .amd-s:last-child{border-bottom:none}
-#amdModal .amd-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:.45rem}
-#amdModal .amd-h{font-size:1.05rem;font-weight:600;color:var(--fg);margin-bottom:.8rem;letter-spacing:-.015em}
-#amdModal .amd-p{font-size:.875rem;color:var(--fg-soft);line-height:1.65;margin-bottom:.6rem}
-#amdModal .amd-p:last-child{margin-bottom:0}
-#amdModal .amd-tags{display:flex;flex-wrap:wrap;gap:.375rem;margin-bottom:1.25rem}
-#amdModal .amd-tag{padding:.2rem .6rem;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);color:#93c5fd;border-radius:9999px;font-size:.6875rem;font-weight:500}
-#amdModal .amd-author{display:inline-flex;flex-direction:column;gap:.15rem;padding:.75rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-#amdModal .amd-author strong{font-size:.875rem;color:var(--fg)}
-#amdModal .amd-author span{font-size:.75rem;color:var(--fg-muted)}
-#amdModal .amd-steps{display:flex;flex-direction:column}
-#amdModal .amd-step{display:grid;grid-template-columns:1.75rem 1fr;gap:.75rem;padding:.875rem 0;border-bottom:1px solid var(--border)}
-#amdModal .amd-step:last-child{border-bottom:none}
-#amdModal .amd-sn{width:1.625rem;height:1.625rem;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);color:#93c5fd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6875rem;font-weight:700;flex-shrink:0;margin-top:.1rem;font-family:'JetBrains Mono',monospace}
-#amdModal .amd-st{font-weight:600;font-size:.875rem;color:var(--fg);margin-bottom:.2rem}
-#amdModal .amd-sd{font-size:.8125rem;color:var(--fg-soft)}
-#amdModal .amd-diagram{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;overflow-x:auto}
-#amdModal .amd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:.5rem}
-#amdModal .amd-card{padding:.875rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
-#amdModal .amd-card:hover{border-color:rgba(37,99,235,.35)}
-#amdModal .amd-cn{font-weight:600;font-size:.8125rem;color:var(--fg);margin-bottom:.2rem}
-#amdModal .amd-cd{font-size:.75rem;color:var(--fg-muted)}
-#amdModal .qr-row{display:flex;gap:.875rem;flex-wrap:wrap;margin-top:.875rem}
-#amdModal .qr-c{flex:1;min-width:140px;max-width:190px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
-#amdModal .qr-c img{width:100%;display:block}
-#amdModal .qr-n{padding:.5rem;background:var(--surface);font-size:.6875rem;font-weight:500;color:var(--fg-soft);text-align:center;font-family:'JetBrains Mono',monospace;border-top:1px solid var(--border)}
-#amdModal .amd-adv{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.5rem}
-#amdModal .amd-ai{padding:.875rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-#amdModal .amd-at{font-weight:600;font-size:.8125rem;color:var(--fg);margin-bottom:.2rem}
-#amdModal .amd-ad{font-size:.75rem;color:var(--fg-muted)}
-#amdModal .amd-apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.5rem}
-#amdModal .amd-app{display:flex;gap:.75rem;padding:.875rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-#amdModal .amd-app-ico{font-size:1.25rem;line-height:1;flex-shrink:0;margin-top:.1rem}
-#amdModal .amd-app-t{font-weight:600;font-size:.8125rem;color:var(--fg);margin-bottom:.2rem}
-#amdModal .amd-app-d{font-size:.75rem;color:var(--fg-muted)}
-#amdModal .amd-fut{display:flex;flex-direction:column;gap:.5rem}
-#amdModal .amd-fi{display:flex;gap:.875rem;padding:.875rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-#amdModal .amd-fd{width:6px;height:6px;background:#93c5fd;border-radius:50%;flex-shrink:0;margin-top:.45rem}
-#amdModal .amd-ft{font-weight:600;font-size:.8125rem;color:var(--fg);margin-bottom:.2rem}
-#amdModal .amd-fdc{font-size:.75rem;color:var(--fg-muted)}
-#amdModal .amd-footer{padding:1rem 1.6rem;border-top:1px solid var(--border);text-align:center;font-size:.75rem;color:var(--fg-muted);font-family:'JetBrains Mono',monospace}
-/* SVG block diagram — theme-aware */
-#amdModal .amd-svg .bd-box{fill:var(--surface);stroke:var(--border);stroke-width:1.5px}
-#amdModal .amd-svg .bd-line{stroke:var(--fg-faint);stroke-width:1.5px;fill:none}
-#amdModal .amd-svg .bd-txt{fill:var(--fg);font-weight:500}
-#amdModal .amd-svg .bd-sub{fill:var(--fg-muted)}
-#amdModal .amd-svg .bd-arr{fill:var(--fg-faint)}
-</style>
 
-<div class="modal" id="amdModal">
-  <div class="modal-box" style="max-width:780px">
-    <div class="modal-header">
-      <span class="modal-title">Automated Medicine Dispenser — Project</span>
-      <button class="modal-close" onclick="closeModal('amdModal')">✕</button>
-    </div>
-    <div class="modal-body" style="padding:0">
-
-      <!-- Hero -->
-      <div class="amd-s">
-        <div class="amd-lbl">Project · ECE · SDM Polytechnic Ujiri</div>
-        <div style="font-size:1.25rem;font-weight:700;color:var(--fg);letter-spacing:-.02em;margin-bottom:.5rem;line-height:1.2">Automated Medicine Dispenser<br><span style="color:var(--fg-soft);font-weight:400;font-size:1rem">with QR Code</span></div>
-        <p class="amd-p" style="margin-bottom:1rem">A smart, error-free system for automated medication identification and dispensing — built with Arduino, servo motors, and QR code scanning.</p>
-        <div class="amd-tags">
-          <span class="amd-tag">Arduino UNO</span>
-          <span class="amd-tag">QR Code Scanning</span>
-          <span class="amd-tag">Servo Motors</span>
-          <span class="amd-tag">Conveyor System</span>
-          <span class="amd-tag">Healthcare Automation</span>
-          <span class="amd-tag">Embedded Systems</span>
-        </div>
-        <div class="amd-author">
-          <strong>Ravishankar Patel PS</strong>
-          <span>Department of Electronics &amp; Communication Engineering</span>
-          <span>SDM Polytechnic Ujiri</span>
-        </div>
-      </div>
-
-      <!-- Abstract -->
-      <div class="amd-s">
-        <div class="amd-lbl">Abstract</div>
-        <div class="amd-h">The Problem &amp; Solution</div>
-        <p class="amd-p">Medication errors and non-adherence to prescribed dosages are major challenges in hospitals, pharmacies, and home care. Manual dispensing introduces human error, delays, and risk — especially for elderly or visually impaired patients.</p>
-        <p class="amd-p">The <strong style="color:var(--fg)">Automated Medicine Dispenser (AMD)</strong> addresses these issues using QR code scanning for precise medicine identification. The system automatically retrieves and delivers the correct medicine — providing visual and audible confirmation — with no manual intervention required.</p>
-      </div>
-
-      <!-- How It Works -->
-      <div class="amd-s">
-        <div class="amd-lbl">Working Principle</div>
-        <div class="amd-h">How It Works</div>
-        <div class="amd-steps">
-          <div class="amd-step">
-            <div class="amd-sn">1</div>
-            <div><div class="amd-st">Scan the QR Code</div><div class="amd-sd">The QR code scanner reads the unique code on the medicine label and transmits data to Arduino via serial communication.</div></div>
-          </div>
-          <div class="amd-step">
-            <div class="amd-sn">2</div>
-            <div><div class="amd-st">Identify the Medicine</div><div class="amd-sd">Arduino compares the scanned data against predefined medicine names to determine which compartment to activate.</div></div>
-          </div>
-          <div class="amd-step">
-            <div class="amd-sn">3</div>
-            <div><div class="amd-st">Activate Servo Motor</div><div class="amd-sd">The corresponding servo motor rotates from 30° to 130°, physically pushing the medicine out of its storage compartment.</div></div>
-          </div>
-          <div class="amd-step">
-            <div class="amd-sn">4</div>
-            <div><div class="amd-st">Alert &amp; Display</div><div class="amd-sd">The buzzer beeps for 0.5 seconds to confirm dispensing. The 16×2 LCD scrolls the medicine name (e.g., "ISOTRETINION 20MG Dispensed").</div></div>
-          </div>
-          <div class="amd-step">
-            <div class="amd-sn">5</div>
-            <div><div class="amd-st">Conveyor Transport</div><div class="amd-sd">The relay activates the conveyor motor simultaneously. It runs for 7 seconds to transport the medicine to the output tray, then shuts off automatically.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Block Diagram -->
-      <div class="amd-s">
-        <div class="amd-lbl">System Architecture</div>
-        <div class="amd-h">Block Diagram</div>
-        <div class="amd-diagram">
-          <svg class="amd-svg" viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg"
-               style="font-family:'Geist','Inter',-apple-system,sans-serif;display:block;margin:0 auto;max-width:100%;width:460px">
-            <defs>
-              <marker id="amdArr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
-                <polygon class="bd-arr" points="0 0,7 2.5,0 5"/>
-              </marker>
-            </defs>
-            <!-- AMD Title (always blue) -->
-            <rect x="150" y="12" width="200" height="42" rx="6" fill="#2563eb"/>
-            <text x="250" y="29" text-anchor="middle" font-size="11" fill="white" font-weight="700">AUTOMATED MEDICINE</text>
-            <text x="250" y="46" text-anchor="middle" font-size="11" fill="white" font-weight="700">DISPENSER</text>
-            <!-- Branch lines -->
-            <line class="bd-line" x1="250" y1="54" x2="250" y2="73"/>
-            <line class="bd-line" x1="120" y1="73" x2="380" y2="73"/>
-            <line class="bd-line" x1="120" y1="73" x2="120" y2="91" marker-end="url(#amdArr)"/>
-            <line class="bd-line" x1="380" y1="73" x2="380" y2="91" marker-end="url(#amdArr)"/>
-            <!-- Row 1 -->
-            <rect class="bd-box" x="45" y="92" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="120" y="108" text-anchor="middle" font-size="11">QR Code Scanner</text>
-            <text class="bd-sub" x="120" y="124" text-anchor="middle" font-size="9.5">Reads medicine label</text>
-            <rect class="bd-box" x="305" y="92" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="380" y="108" text-anchor="middle" font-size="11">Arduino UNO</text>
-            <text class="bd-sub" x="380" y="124" text-anchor="middle" font-size="9.5">Central controller</text>
-            <!-- QR → Arduino -->
-            <line class="bd-line" x1="195" y1="112" x2="305" y2="112" marker-end="url(#amdArr)"/>
-            <!-- Row 1 → 2 -->
-            <line class="bd-line" x1="120" y1="132" x2="120" y2="152"/>
-            <line class="bd-line" x1="380" y1="132" x2="380" y2="152"/>
-            <line class="bd-line" x1="120" y1="152" x2="380" y2="152"/>
-            <line class="bd-line" x1="120" y1="152" x2="120" y2="170" marker-end="url(#amdArr)"/>
-            <line class="bd-line" x1="380" y1="152" x2="380" y2="170" marker-end="url(#amdArr)"/>
-            <!-- Row 2 -->
-            <rect class="bd-box" x="45" y="171" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="120" y="187" text-anchor="middle" font-size="11">Servo Motors (×2)</text>
-            <text class="bd-sub" x="120" y="203" text-anchor="middle" font-size="9.5">Pushes medicine 30°→130°</text>
-            <rect class="bd-box" x="305" y="171" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="380" y="187" text-anchor="middle" font-size="11">Relay Module</text>
-            <text class="bd-sub" x="380" y="203" text-anchor="middle" font-size="9.5">Controls conveyor</text>
-            <!-- Servo → Relay -->
-            <line class="bd-line" x1="195" y1="191" x2="305" y2="191" marker-end="url(#amdArr)"/>
-            <!-- Row 2 → 3 -->
-            <line class="bd-line" x1="120" y1="211" x2="120" y2="231"/>
-            <line class="bd-line" x1="380" y1="211" x2="380" y2="231"/>
-            <line class="bd-line" x1="120" y1="231" x2="380" y2="231"/>
-            <line class="bd-line" x1="120" y1="231" x2="120" y2="249" marker-end="url(#amdArr)"/>
-            <line class="bd-line" x1="380" y1="231" x2="380" y2="249" marker-end="url(#amdArr)"/>
-            <!-- Row 3 -->
-            <rect class="bd-box" x="45" y="250" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="120" y="266" text-anchor="middle" font-size="11">Conveyor Motor</text>
-            <text class="bd-sub" x="120" y="282" text-anchor="middle" font-size="9.5">Runs for 7 seconds</text>
-            <rect class="bd-box" x="305" y="250" width="150" height="40" rx="5"/>
-            <text class="bd-txt" x="380" y="266" text-anchor="middle" font-size="11">16×2 LCD Display</text>
-            <text class="bd-sub" x="380" y="282" text-anchor="middle" font-size="9.5">Shows medicine name</text>
-            <!-- Row 3 → Buzzer -->
-            <line class="bd-line" x1="120" y1="290" x2="120" y2="312"/>
-            <line class="bd-line" x1="380" y1="290" x2="380" y2="312"/>
-            <line class="bd-line" x1="120" y1="312" x2="380" y2="312"/>
-            <line class="bd-line" x1="250" y1="312" x2="250" y2="330" marker-end="url(#amdArr)"/>
-            <!-- Buzzer -->
-            <rect class="bd-box" x="175" y="331" width="150" height="38" rx="5"/>
-            <text class="bd-txt" x="250" y="347" text-anchor="middle" font-size="11">Buzzer</text>
-            <text class="bd-sub" x="250" y="361" text-anchor="middle" font-size="9.5">Beeps 0.5 sec on dispense</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Components -->
-      <div class="amd-s">
-        <div class="amd-lbl">Hardware &amp; Software</div>
-        <div class="amd-h">Components Used</div>
-        <div class="amd-grid">
-          <div class="amd-card"><div class="amd-cn">Arduino UNO</div><div class="amd-cd">Main microcontroller — processes QR data and activates all components.</div></div>
-          <div class="amd-card"><div class="amd-cn">QR Code Scanner</div><div class="amd-cd">Reads medicine labels via serial communication, sends data to Arduino.</div></div>
-          <div class="amd-card"><div class="amd-cn">Servo Motors ×2</div><div class="amd-cd">Rotate from 30° to 130° to physically push medicine from compartment.</div></div>
-          <div class="amd-card"><div class="amd-cn">Relay Module</div><div class="amd-cd">Activates with servo; controls the conveyor motor circuit.</div></div>
-          <div class="amd-card"><div class="amd-cn">Conveyor Motor</div><div class="amd-cd">Transports dispensed medicine to the output tray for 7 seconds.</div></div>
-          <div class="amd-card"><div class="amd-cn">16×2 LCD Display</div><div class="amd-cd">Displays medicine name and system status via I2C communication.</div></div>
-          <div class="amd-card"><div class="amd-cn">Buzzer</div><div class="amd-cd">Audible 0.5-second beep confirms successful dispensing.</div></div>
-          <div class="amd-card"><div class="amd-cn">Arduino IDE / C++</div><div class="amd-cd">Software platform for writing and uploading the control program.</div></div>
-        </div>
-        <div style="margin-top:1rem;font-size:.75rem;color:var(--fg-muted);font-weight:500;font-family:'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;margin-bottom:.5rem">Medicine Labels Used in Demo</div>
-        <div class="qr-row">
-          <div class="qr-c"><img src="/Users/ravishankar/Desktop/02_Projects/Automated_Medicine_Dispenser/Screenshots/AMD_image_1.jpg" alt="QR — ISOTRETINION 20MG"><div class="qr-n">ISOTRETINION 20MG</div></div>
-          <div class="qr-c"><img src="/Users/ravishankar/Desktop/02_Projects/Automated_Medicine_Dispenser/Screenshots/AMD_image_2.jpg" alt="QR — Ofloxacin Tablets IP"><div class="qr-n">Ofloxacin Tablets IP</div></div>
-        </div>
-      </div>
-
-      <!-- Advantages -->
-      <div class="amd-s">
-        <div class="amd-lbl">Advantages</div>
-        <div class="amd-h">Why It Works</div>
-        <div class="amd-adv">
-          <div class="amd-ai"><div class="amd-at">Reduces Medication Errors</div><div class="amd-ad">QR-based identification guarantees the correct medicine is always dispensed.</div></div>
-          <div class="amd-ai"><div class="amd-at">Fully Automated</div><div class="amd-ad">Eliminates manual retrieval — no pharmacist or caregiver intervention needed.</div></div>
-          <div class="amd-ai"><div class="amd-at">Instant Feedback</div><div class="amd-ad">LCD display and buzzer provide real-time visual and audible confirmation.</div></div>
-          <div class="amd-ai"><div class="amd-at">Fast &amp; Reliable</div><div class="amd-ad">Handles continuous QR scans with no delay between dispensing cycles.</div></div>
-          <div class="amd-ai"><div class="amd-at">Scalable Design</div><div class="amd-ad">Easily expandable to support more medicine compartments and servo motors.</div></div>
-          <div class="amd-ai"><div class="amd-at">Low Cost</div><div class="amd-ad">Built with widely available, affordable components — accessible for clinics and homes alike.</div></div>
-        </div>
-      </div>
-
-      <!-- Applications -->
-      <div class="amd-s">
-        <div class="amd-lbl">Applications</div>
-        <div class="amd-h">Where It Can Be Used</div>
-        <div class="amd-apps">
-          <div class="amd-app"><div class="amd-app-ico">&#127973;</div><div><div class="amd-app-t">Hospitals &amp; Clinics</div><div class="amd-app-d">Reduces burden on medical staff and ensures accurate, fast medicine distribution.</div></div></div>
-          <div class="amd-app"><div class="amd-app-ico">&#128138;</div><div><div class="amd-app-t">Pharmacies</div><div class="amd-app-d">Automates medicine retrieval, increases throughput, reduces wait times.</div></div></div>
-          <div class="amd-app"><div class="amd-app-ico">&#127968;</div><div><div class="amd-app-t">Elderly &amp; Home Care</div><div class="amd-app-d">Helps elderly or visually impaired patients take correct medication independently.</div></div></div>
-          <div class="amd-app"><div class="amd-app-ico">&#127970;</div><div><div class="amd-app-t">Medical Warehouses</div><div class="amd-app-d">Enables automated medicine retrieval and inventory stock management at scale.</div></div></div>
-        </div>
-      </div>
-
-      <!-- Future Scope -->
-      <div class="amd-s">
-        <div class="amd-lbl">Future Scope</div>
-        <div class="amd-h">What Comes Next</div>
-        <div class="amd-fut">
-          <div class="amd-fi"><div class="amd-fd"></div><div><div class="amd-ft">IoT-Based Remote Monitoring</div><div class="amd-fdc">Connect to the internet for real-time medicine tracking, remote status updates, and cloud logging for healthcare providers.</div></div></div>
-          <div class="amd-fi"><div class="amd-fd"></div><div><div class="amd-ft">Mobile App Integration</div><div class="amd-fdc">Allow patients and caregivers to receive dispensing alerts, track medication schedules, and manage refills from a smartphone.</div></div></div>
-          <div class="amd-fi"><div class="amd-fd"></div><div><div class="amd-ft">AI-Based Prescription Validation</div><div class="amd-fdc">Automatically cross-check dispensed medicines against digital prescriptions to prevent over-dispensing and ensure safety.</div></div></div>
-          <div class="amd-fi"><div class="amd-fd"></div><div><div class="amd-ft">Multi-Slot Expansion</div><div class="amd-fdc">Add more medicine compartment slots and upgrade the conveyor for faster sorting and a larger formulary.</div></div></div>
-        </div>
-      </div>
-
-      <div class="amd-footer">Ravishankar Patel PS · ECE, SDM Polytechnic Ujiri · 2025</div>
-    </div>
-  </div>
-</div>
 
 <div id="authOverlay">
   <div class="auth-box">
@@ -1149,7 +901,15 @@ footer{
 </div>
 
 <script>
+function _skipIntro(){
+  document.getElementById('preloader').classList.add('done');
+  document.body.classList.remove('loading');
+  document.body.classList.add('loaded','no-intro');
+}
+window.addEventListener('pageshow',(e)=>{if(e.persisted)_skipIntro();});
 window.addEventListener('load',()=>{
+  if(sessionStorage.getItem('psr-v')){_skipIntro();return;}
+  sessionStorage.setItem('psr-v','1');
   const min=1400;const t0=performance.now();
   const finish=()=>{
     const wait=Math.max(0,min-(performance.now()-t0));
@@ -1211,8 +971,8 @@ document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if
       const _k = [17, 43, 97, 23, 71, 53, 89, 31, 67, 41];
       // Phone: split into 3 chunks, XOR encoded
       const _pa = [58, 18, 80, 55], _pb = [112, 2, 96, 42, 119], _pc = [25, 36, 25, 88, 37];
-      // Gmail: split into 3 chunks, XOR encoded
-      const _ga = [99, 74, 23, 126, 52, 93, 56, 113, 40], _gb = [72, 99, 91, 0, 99, 34, 89, 41, 108], _gc = [3, 78, 124, 74, 8, 123, 105, 86, 54, 114];
+      // Work email: split into 3 chunks, XOR encoded
+      const _ga = [112, 79, 12, 126, 41, 117, 43, 126, 53], _gb = [64, 98, 67, 0, 121, 44, 84, 43, 111], _gc = [34, 93, 116, 71, 79, 126, 41];
       // iCloud: split into 3 chunks, XOR encoded
       const _ia = [97, 88, 19, 118, 49, 92, 42, 119, 34], _ib = [71, 122, 74, 19, 103, 38, 65, 60, 115, 3], _ic = [64, 114, 71, 14, 98, 35, 27, 58, 112, 46];
 
@@ -1328,7 +1088,7 @@ function showReveal(t){
   const val=window.__revealContact(t);
   if(!val){alert('Verification failed. Please try again.');return;}
   _revealVal=val;_revealType=t;
-  const labels={phone:'Phone',gmail:'Gmail',icloud:'iCloud Mail'};
+  const labels={phone:'Phone',gmail:'Email',icloud:'iCloud Mail'};
   document.getElementById('revealLabel').textContent=labels[t]||t;
   document.getElementById('revealValue').textContent=val;
   // Also update the inline contact rows in contact section
