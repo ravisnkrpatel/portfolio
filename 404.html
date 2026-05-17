@@ -1,125 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>404 — Ravishankar Patel P S</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230a0a0a'/%3E%3Cline x1='14' y1='54' x2='26' y2='10' stroke='%23e8321a' stroke-width='4.5' stroke-linecap='round'/%3E%3Cline x1='26' y1='10' x2='26' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M26 10 L46 10 L50 22 L26 32' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cline x1='26' y1='32' x2='50' y2='54' stroke='%233dd9c0' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='54' cy='54' r='4' stroke='%23f5c842' stroke-width='2.5' fill='none'/%3E%3C/svg%3E"/>
+<title>404 — Ravishankar Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Ccircle cx='259' cy='251' r='19' fill='%233dffa3'/%3E%3C/svg%3E"/>
 <style>
-:root{--red:#e8321a;--teal:#3dd9c0;--gold:#f5c842;--bg:#0a0a0a;--fg:#f2f0eb;--s1:#111111;--s2:#1a1a1a;--mu:rgba(242,240,235,.48)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--fg:#ededed;
+  --fg-soft:rgba(237,237,237,.7);
+  --fg-muted:rgba(237,237,237,.4);
+  --border:rgba(237,237,237,.08);
+  --surface:rgba(237,237,237,.04);
+  --accent:#3dffa3;
+}
+[data-theme="light"]{
+  --bg:#fafafa;--fg:#0a0a0a;
+  --fg-soft:rgba(10,10,10,.68);
+  --fg-muted:rgba(10,10,10,.45);
+  --border:rgba(10,10,10,.08);
+  --surface:rgba(10,10,10,.03);
+}
 html,body{height:100%}
-body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;position:relative}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:'Geist',-apple-system,system-ui,sans-serif;
+  font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  transition:background .35s,color .35s;
+}
+::selection{background:var(--fg);color:var(--bg)}
 
-/* noise grain */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");opacity:.18}
+.theme-toggle{
+  position:fixed;top:1.4rem;right:1.4rem;
+  z-index:100;
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.55rem 1.1rem;
+  background:rgba(20,20,20,.65);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid rgba(237,237,237,.08);
+  border-radius:999px;
+  color:var(--fg-soft);
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.06em;
+  cursor:pointer;
+  transition:all .3s cubic-bezier(.16,1,.3,1);
+}
+[data-theme="light"] .theme-toggle{
+  background:rgba(250,250,250,.78);
+  border-color:rgba(10,10,10,.06);
+}
+.theme-toggle:hover{color:var(--fg);border-color:rgba(237,237,237,.18)}
+[data-theme="light"] .theme-toggle:hover{border-color:rgba(10,10,10,.18)}
+.theme-toggle .icon-light{display:none}
+.theme-toggle .icon-dark{display:block}
+[data-theme="light"] .theme-toggle .icon-light{display:block}
+[data-theme="light"] .theme-toggle .icon-dark{display:none}
 
-/* grid bg */
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.wrap{
+  text-align:center;
+  padding:2rem;
+  max-width:520px;
+  width:100%;
+  animation:fade-in .9s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes fade-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-.wrap{position:relative;z-index:2;text-align:center;padding:2rem;max-width:640px;width:100%}
+.code{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(5rem,18vw,9rem);
+  font-weight:500;
+  line-height:1;
+  letter-spacing:-.04em;
+  color:var(--fg);
+  margin-bottom:1.5rem;
+}
+.code .accent{color:var(--accent)}
 
-/* big 404 */
-.big{font-family:'Bebas Neue',cursive;font-size:clamp(7rem,22vw,16rem);line-height:.88;letter-spacing:.04em;position:relative;display:inline-block;animation:glitchloop 5s linear infinite}
-.big .r{color:var(--red)}
-.big .t{color:var(--teal);-webkit-text-stroke:2px var(--teal);color:transparent}
-
-@keyframes glitchloop{
-  0%{clip-path:none;transform:none}
-  80%{clip-path:none;transform:none}
-  81%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-4px,0)}
-  82%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(4px,0)}
-  83%{clip-path:none;transform:translate(-2px,1px)}
-  84%{clip-path:polygon(0 10%,100% 10%,100% 30%,0 30%);transform:translate(3px,-1px)}
-  85%{clip-path:none;transform:none}
-  86%{clip-path:polygon(0 50%,100% 50%,100% 70%,0 70%);transform:translate(-3px,2px)}
-  87%{clip-path:none;transform:translate(2px,0)}
-  88%{clip-path:none;transform:none}
-  100%{clip-path:none;transform:none}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--fg-muted);
+  margin-bottom:2.5rem;
 }
 
-.label{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;animation:fu .7s ease both}
+.msg{
+  font-size:1.05rem;
+  color:var(--fg-soft);
+  line-height:1.65;
+  margin-bottom:2.5rem;
+  max-width:380px;
+  margin-left:auto;margin-right:auto;
+}
 
-.msg{font-family:'Bebas Neue',cursive;font-size:clamp(1.6rem,4vw,2.8rem);letter-spacing:.04em;line-height:1.1;margin:1.2rem 0 .8rem;animation:fu .8s ease both .1s}
-.msg .ac{color:var(--red)}
+.countdown{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.12em;
+  color:var(--fg-muted);
+  margin-bottom:2rem;
+}
+.countdown span{color:var(--accent)}
 
-.sub{font-size:.88rem;color:var(--mu);line-height:1.8;max-width:420px;margin:0 auto 2.2rem;animation:fu .9s ease both .2s}
-.sub strong{color:var(--fg);font-weight:500}
+.home-btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.7rem 1.5rem;
+  background:var(--fg);color:var(--bg);
+  border:none;border-radius:999px;
+  font-family:'Geist',inherit;font-size:.82rem;font-weight:500;
+  letter-spacing:-.005em;
+  text-decoration:none;cursor:pointer;
+  transition:opacity .2s,transform .2s;
+}
+.home-btn:hover{opacity:.85;transform:translateY(-1px)}
 
-/* redirect countdown */
-.countdown-wrap{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:2rem;animation:fu 1s ease both .3s}
-.countdown-wrap span{color:var(--gold);font-size:.8rem}
-
-/* home button */
-.homebtn{display:inline-block;font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.9rem 2.2rem;background:var(--red);color:#fff;text-decoration:none;border:2px solid var(--red);transition:all .24s;animation:fu 1s ease both .4s}
-.homebtn:hover{background:transparent;color:var(--red)}
-
-/* floating tags */
-.ftag{position:fixed;font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .55rem;border-radius:2px;white-space:nowrap;opacity:.5;animation:bob ease-in-out infinite;pointer-events:none}
-.f1{background:rgba(61,217,192,.1);color:var(--teal);border:1px solid rgba(61,217,192,.25);top:14%;left:6%;animation-duration:3.8s}
-.f2{background:rgba(232,50,26,.1);color:var(--red);border:1px solid rgba(232,50,26,.25);top:22%;right:7%;animation-duration:4.4s;animation-delay:.8s}
-.f3{background:rgba(245,200,66,.08);color:var(--gold);border:1px solid rgba(245,200,66,.2);bottom:28%;left:5%;animation-duration:3.5s;animation-delay:1.4s}
-.f4{background:rgba(61,217,192,.07);color:var(--teal);border:1px solid rgba(61,217,192,.18);bottom:18%;right:6%;animation-duration:4.8s;animation-delay:.4s}
-.f5{background:rgba(242,240,235,.05);color:rgba(242,240,235,.5);border:1px solid rgba(242,240,235,.12);top:62%;left:3%;animation-duration:4.1s;animation-delay:2s}
-.f6{background:rgba(232,50,26,.07);color:var(--red);border:1px solid rgba(232,50,26,.18);top:52%;right:4%;animation-duration:3.3s;animation-delay:1s}
-
-/* footer brand */
-.foot{position:fixed;bottom:1.4rem;left:0;right:0;display:flex;justify-content:space-between;padding:0 2rem;z-index:2;pointer-events:none}
-.foot-l{font-family:'Bebas Neue',cursive;font-size:1rem;letter-spacing:.14em;color:rgba(242,240,235,.2)}
-.foot-l em{color:var(--red);font-style:normal}
-.foot-r{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.1em;color:rgba(242,240,235,.15);text-transform:uppercase}
-
-@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.foot{
+  position:fixed;bottom:1.4rem;left:0;right:0;
+  display:flex;justify-content:space-between;
+  padding:0 1.8rem;
+  pointer-events:none;
+}
+.foot-l,.foot-r{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.6rem;letter-spacing:.1em;
+  color:var(--fg-muted);
+  text-transform:uppercase;
+}
 </style>
 </head>
 <body>
 
-<!-- floating skill tags -->
-<div class="ftag f1">Factory Automation</div>
-<div class="ftag f2">PLC S7-1200</div>
-<div class="ftag f3">Arduino · ESP32</div>
-<div class="ftag f4">TIA Portal V18</div>
-<div class="ftag f5">SCADA &amp; HMI</div>
-<div class="ftag f6">PCB Design</div>
+<button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+  <svg class="icon-light" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  <svg class="icon-dark" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
 
 <div class="wrap">
-  <div class="label">// Error · Page not found</div>
-
-  <div class="big"><span class="r">4</span><span class="t">0</span><span class="r">4</span></div>
-
-  <h1 class="msg">Wrong address.<br><span class="ac">Even I'd get lost here.</span></h1>
-
-  <p class="sub">
-    This page doesn't exist — kind of like the free time I don't have while training at <strong>Siemens COE</strong>. Whatever you were looking for, it's not here. But <strong>I</strong> am — one click away.
-  </p>
-
-  <div class="countdown-wrap">
-    Auto-redirecting in <span id="cd-num">10</span>s &nbsp;·&nbsp; or go now
-  </div>
-
-  <a href="https://ravishankarpatel.in" class="homebtn">↩ Back to Home</a>
+  <div class="code"><span class="accent">4</span>0<span class="accent">4</span></div>
+  <div class="eyebrow">Page not found</div>
+  <p class="msg">This page doesn't exist. Whatever you were looking for, it's not here — but I am, one click away.</p>
+  <div class="countdown">Redirecting in <span id="cd">10</span>s</div>
+  <a href="https://ravishankarpatel.in" class="home-btn">← Back to home</a>
 </div>
 
-<!-- footer brand -->
 <div class="foot">
-  <div class="foot-l">PSR<em>.</em></div>
-  <div class="foot-r">ravishankarpatel.in</div>
+  <span class="foot-l">ravishankarpatel.in</span>
+  <span class="foot-r">PSR.</span>
 </div>
 
 <script>
-// countdown redirect
+function toggleTheme(){
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('psr-theme', next);
+}
 (function(){
-  let t=10;
-  const el=document.getElementById('cd-num');
-  const iv=setInterval(()=>{
+  const t = localStorage.getItem('psr-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+
+(function(){
+  let t = 10;
+  const el = document.getElementById('cd');
+  const iv = setInterval(() => {
     t--;
-    el.textContent=t;
-    if(t<=0){clearInterval(iv);window.location.href='https://ravishankarpatel.in';}
-  },1000);
+    el.textContent = t;
+    if(t <= 0){ clearInterval(iv); window.location.href = 'https://ravishankarpatel.in'; }
+  }, 1000);
 })();
 </script>
 </body>
