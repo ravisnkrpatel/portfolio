@@ -761,7 +761,7 @@
       padding: 2rem 0;
       border-bottom: 1px solid var(--border);
       align-items: start;
-      cursor: default;
+      cursor: pointer;
       transition: padding .35s cubic-bezier(.16, 1, .3, 1);
     }
 
@@ -1567,6 +1567,28 @@
       opacity: 1 !important;
       transform: none !important
     }
+
+    /* ── TOUCH DEVICE FIX ──
+       On phones/tablets, the first tap was triggering the :hover state
+       instead of the click. Disabling hover-driven layout shifts on
+       touch devices makes links open on a single tap. */
+    @media (hover:none) {
+      .work-item:hover { padding-left: 0 }
+      .work-item:hover .work-title { color: var(--fg) }
+      .work-link:hover { color: var(--fg-muted) }
+      .stack-item:hover { background: var(--bg) }
+      .stack-item:hover::before { transform: scaleX(0) }
+      .timeline-row:hover { padding-left: 0 }
+      .contact-row:hover { padding-left: 0; padding-right: 0 }
+      .contact-row:hover .contact-row-label { color: var(--fg-muted) }
+      .index-item:hover { background: var(--bg); padding-left: 1.4rem }
+      .index-item:hover .index-arrow { color: var(--fg-muted); transform: none }
+      .index-item:hover .index-name { color: var(--fg) }
+      .soc:hover { background: var(--bg); padding-left: 1.2rem }
+      .nav-brand:hover { background: none }
+      .nav-links a:hover { background: none; color: var(--fg-soft) }
+      .pill-btn:hover { transform: none }
+    }
   </style>
 </head>
 
@@ -1686,7 +1708,7 @@
       <h2 class="section-title">projects</h2>
     </div>
     <div class="work-list rv">
-      <div class="work-item">
+      <div class="work-item" onclick="location.href='projects/medicine-dispenser.html'">
         <div class="work-year">2024</div>
         <div>
           <div class="work-title">Automated Medicine Dispenser</div>
@@ -1695,7 +1717,7 @@
         </div>
         <a href="projects/medicine-dispenser.html" class="work-link">Case study ↗</a>
       </div>
-      <div class="work-item">
+      <div class="work-item" onclick="location.href='projects/mcam.html'">
         <div class="work-year">2024</div>
         <div>
           <div class="work-title">MCAM — Motion Camera</div>
@@ -1704,7 +1726,7 @@
         </div>
         <a href="projects/mcam.html" class="work-link">Case study ↗</a>
       </div>
-      <div class="work-item">
+      <div class="work-item" onclick="location.href='projects/advance-trends-ece.html'">
         <div class="work-year">2024</div>
         <div>
           <div class="work-title">Advance Trends in ECE</div>
