@@ -28,8 +28,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "ravisnkr.patel",
-  "alternateName": "ravishankr.patel",
+  "name": "ravisnkr.portfolio",
+  "alternateName": "ravisnkr.patel",
   "url": "https://ravishankarpatel.in",
   "image": "https://ravishankarpatel.in/favicon.png",
   "jobTitle": "Electronics & Communication Engineering Student · Industrial Automation Intern",
@@ -132,7 +132,9 @@
 
     html {
       scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     body {
@@ -144,6 +146,9 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+      position: relative;
       transition: background .35s cubic-bezier(.4, 0, .2, 1), color .35s cubic-bezier(.4, 0, .2, 1);
     }
 
@@ -608,6 +613,7 @@
       padding: 8rem 2rem 4rem;
       position: relative;
       width: 100%;
+      overflow: hidden;
     }
 
     #home::before {
@@ -669,6 +675,12 @@
 
       #home {
         padding: 7rem 1.5rem 3rem
+      }
+
+      #home::before {
+        width: 320px;
+        height: 320px;
+        left: -20%;
       }
     }
 
@@ -2243,7 +2255,7 @@
       const target = authTarget;
       closeAuth();
       if (target === 'resume') {
-        setTimeout(() => window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_d1a6ac1b49a04e8dab8e23edc96ef7d8.pdf', '_blank'), 300);
+        setTimeout(() => window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_af89543ec9b444498d3c5986d0f16fc0.pdf', '_blank'), 300);
       } else {
         setTimeout(() => showReveal(target), 300);
       }
