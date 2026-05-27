@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
@@ -386,6 +386,10 @@
       border-radius: 50%;
       transition: background .25s, color .25s;
       font-family: inherit;
+    }
+
+    .nav-icon-btn svg {
+      pointer-events: none;
     }
 
     .nav-icon-btn:hover {
@@ -2102,12 +2106,19 @@
     });
 
     function setTheme(t) {
+      if (t !== 'light' && t !== 'dark') t = 'dark';
       document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('psr-theme', t);
-      document.getElementById('lightBtn').classList.toggle('active', t === 'light');
-      document.getElementById('darkBtn').classList.toggle('active', t === 'dark');
+      try { localStorage.setItem('psr-theme', t); } catch (e) {}
+      var lb = document.getElementById('lightBtn');
+      var db = document.getElementById('darkBtn');
+      if (lb) lb.classList.toggle('active', t === 'light');
+      if (db) db.classList.toggle('active', t === 'dark');
     }
-    (function () { const t = localStorage.getItem('psr-theme') || 'dark'; setTheme(t); })();
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('psr-theme') || 'dark'; } catch (e) {}
+      setTheme(t);
+    })();
 
     window.addEventListener('scroll', () => {
       const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
