@@ -4,8 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" id="metaTheme" content="#0a0a0a" />
+  <!-- Anti-FOUC: apply saved theme BEFORE first paint so light-mode users
+       don't see a flash of the dark preloader on reload. -->
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('psr-theme') || 'dark'; } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      var m = document.getElementById('metaTheme');
+      if (m) m.setAttribute('content', t === 'light' ? '#fafafa' : '#0a0a0a');
+    })();
+  </script>
   <title>ravisnkr.portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2109,6 +2120,8 @@
       if (t !== 'light' && t !== 'dark') t = 'dark';
       document.documentElement.setAttribute('data-theme', t);
       try { localStorage.setItem('psr-theme', t); } catch (e) {}
+      var m = document.getElementById('metaTheme');
+      if (m) m.setAttribute('content', t === 'light' ? '#fafafa' : '#0a0a0a');
       var lb = document.getElementById('lightBtn');
       var db = document.getElementById('darkBtn');
       if (lb) lb.classList.toggle('active', t === 'light');
