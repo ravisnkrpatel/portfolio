@@ -1,14 +1,20 @@
 {
-  "name": "Ravishankar Patel — Portfolio",
+  "name": "Ravishankar Patel | Portfolio Website",
   "short_name": "ravisnkr.patel",
-  "description": "ECE student building industrial automation, embedded systems, and PCBs.",
+  "description": "Student @ MIT Manipal | Technology Enthusiast",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#0a0a0a",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Crect x='240' y='232' width='38' height='38' fill='%233dffa3'/%3E%3C/svg%3E",
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
