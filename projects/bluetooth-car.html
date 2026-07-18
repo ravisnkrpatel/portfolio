@@ -3,30 +3,30 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Automated Medicine Dispenser — Ravishankar Patel</title>
+<title>Bluetooth Car — Ravishankar Patel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23000000'/%3E%3Ctext x='155' y='270' font-family='Helvetica Neue,Arial,sans-serif' font-size='280' font-weight='700' fill='%23e8e8e8' letter-spacing='-10'%3Er%3C/text%3E%3Crect x='240' y='232' width='38' height='38' fill='%233dffa3'/%3E%3C/svg%3E"/>
-<meta name="description" content="Smart medicine dispenser using QR codes and servo motor control for accurate, timely medication delivery. Reduces human error, ensures dosage compliance, and applicable across hospitals, pharmacies, clinics, and home healthcare settings."/>
-<meta property="og:title" content="Automated Medicine Dispenser — Ravishankar Patel"/>
-<meta property="og:description" content="Smart medicine dispenser using QR codes and servo motor control for accurate, timely medication delivery. Reduces human error, ensures dosage compliance, and applicable across hospitals, pharmacies, clinics, and home healthcare settings."/>
-<meta property="og:url" content="https://ravishankarpatel.in/projects/medicine-dispenser.html"/>
+<meta name="description" content="ESP32-based Bluetooth-controlled car with an L298 motor driver and 12V DC motors. Driven from a phone over Bluetooth Classic using a simple serial command protocol."/>
+<meta property="og:title" content="Bluetooth Car — Ravishankar Patel"/>
+<meta property="og:description" content="ESP32-based Bluetooth-controlled car with an L298 motor driver and 12V DC motors. Driven from a phone over Bluetooth Classic using a simple serial command protocol."/>
+<meta property="og:url" content="https://ravishankarpatel.in/projects/bluetooth-car.html"/>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "name": "Automated Medicine Dispenser",
-  "description": "Smart medicine dispenser using QR codes and servo motor control for accurate, timely medication delivery. Reduces human error, ensures dosage compliance, and applicable across hospitals, pharmacies, clinics, and home healthcare settings.",
+  "name": "Microcontroller Based Bluetooth Car",
+  "description": "ESP32-based Bluetooth-controlled car with an L298 motor driver and 12V DC motors. Driven from a phone over Bluetooth Classic using a simple serial command protocol.",
   "author": {
     "@type": "Person",
     "name": "Ravishankar Patel P S",
     "url": "https://ravishankarpatel.in"
   },
-  "datePublished": "2024",
-  "url": "https://ravishankarpatel.in/projects/medicine-dispenser.html",
-  "keywords": "medicine dispenser, QR code, servo motor, Arduino, healthcare automation, IoT, embedded systems"
+  "datePublished": "2025",
+  "url": "https://ravishankarpatel.in/projects/bluetooth-car.html",
+  "keywords": "bluetooth car, ESP32, L298, motor driver, robotics, embedded systems, Arduino"
 }
 </script>
 
@@ -332,24 +332,24 @@ h2.block-title{
 
 <main>
   <div class="eyebrow">
-    <span>Project 01</span>
-    <span class="tag">Healthcare</span>
+    <span>Project 04</span>
+    <span class="tag">Robotics</span>
   </div>
-  <h1 class="proj-title">Automated Medicine Dispenser</h1>
-  <p class="proj-tagline">A QR-driven dispensing system that reduces medication errors and ensures timely delivery in clinics, pharmacies, and home care.</p>
+  <h1 class="proj-title">Microcontroller Based Bluetooth Car</h1>
+  <p class="proj-tagline">A four-wheel car driven from a phone over Bluetooth — an ESP32 receives serial drive commands and controls 12V DC motors through an L298 motor driver.</p>
 
   <div class="proj-meta">
     <div class="meta-cell">
       <div class="meta-label">Year</div>
-      <div class="meta-value">2024</div>
+      <div class="meta-value">2025</div>
     </div>
     <div class="meta-cell">
       <div class="meta-label">Domain</div>
-      <div class="meta-value">Healthcare · IoT</div>
+      <div class="meta-value">Robotics · Embedded</div>
     </div>
     <div class="meta-cell">
       <div class="meta-label">Status</div>
-      <div class="meta-value">Working prototype</div>
+      <div class="meta-value">Working build</div>
     </div>
     <div class="meta-cell">
       <div class="meta-label">Role</div>
@@ -358,54 +358,53 @@ h2.block-title{
   </div>
 
   <section class="block">
-    <h2 class="block-title"><span class="block-num">01</span>The Problem</h2>
+    <h2 class="block-title"><span class="block-num">01</span>The Idea</h2>
     <div class="prose">
-      <p>Medication errors are a leading cause of preventable harm in healthcare. Wrong dosages, missed doses, or incorrect medications harm patients — especially the elderly managing multiple prescriptions at home, or busy pharmacy counters dispensing hundreds of prescriptions daily.</p>
-            <p>Manual dispensing is slow, error-prone, and requires constant attention. The goal was to build something simple, reliable, and affordable.</p>
+      <p>A classic embedded-systems build done properly: a phone-controlled car where every layer — power, motor drive, wireless link, and firmware — is understood and hand-wired rather than taken from a kit.</p>
+      <p>The goal was a responsive, reliable car using the <strong>ESP32's built-in Bluetooth Classic</strong>, so no separate HC-05 module is needed and the whole control path lives in one chip.</p>
     </div>
   </section>
 <section class="block">
     <h2 class="block-title"><span class="block-num">02</span>The Approach</h2>
     <div class="prose">
-      <p>I designed a <strong>QR-based dispensing system</strong> where each prescription gets a unique QR code containing patient info, medication, and dosage. The dispenser reads the QR, identifies the correct medicine compartment, and delivers the exact dose via servo-controlled gates.</p>
+      <p>The ESP32 advertises as <strong>ESP32_Car</strong> over Bluetooth Serial (SPP). A controller app on the phone sends short newline-terminated commands, and the firmware maps them to motor states on an L298 dual H-bridge.</p>
             <ul>
-              <li>QR code scanning for prescription verification</li>
-              <li>Servo motor control for individual compartment dispensing</li>
-              <li>LED + buzzer feedback for successful dispense events</li>
-              <li>Tamper-resistant compartments to prevent misuse</li>
-              <li>Optional logging for caregivers / pharmacists to audit usage</li>
+              <li>Nine drive commands: forward, backward, spins, smooth diagonal turns, and stop</li>
+              <li>Unknown or dropped commands fail safe to a motor stop</li>
+              <li>Dual-supply power: 12V pack with BMS for the motors, separate 8V supply for the ESP32</li>
+              <li>Common-ground wiring between logic and drive stages</li>
             </ul>
     </div>
   </section>
 <section class="block">
     <h2 class="block-title"><span class="block-num">03</span>How It Works</h2>
     <div class="prose">
-      <p>The user scans a QR code printed on their prescription (or shown on a phone). The microcontroller parses the QR, validates it against the loaded medication map, then commands the correct servo to release exactly one dose. The display confirms the action.</p>
-            <p>For multi-medication setups, the system queues doses and handles them sequentially with safe timing gaps to prevent jamming.</p>
+      <p>Four GPIO pins drive the L298's IN1–IN4 inputs, controlling the left and right motor pairs independently. Straight motion runs both sides; spins run them in opposition; diagonal turns stop one side for a smooth arc.</p>
+            <p>Commands stream in over Bluetooth Serial and are parsed line-by-line, so any generic Bluetooth controller app works — buttons are simply mapped to the command letters.</p>
     </div>
   </section>
 <section class="block">
     <h2 class="block-title"><span class="block-num">04</span>Tech Stack</h2>
     <div class="tech-grid">
-      <div class="tech-cell"><div class="tech-name">Arduino</div><div class="tech-role">Main controller</div></div>
-      <div class="tech-cell"><div class="tech-name">Servo Motors</div><div class="tech-role">Dispensing mechanism</div></div>
-      <div class="tech-cell"><div class="tech-name">QR Scanner Module</div><div class="tech-role">Prescription input</div></div>
-      <div class="tech-cell"><div class="tech-name">LCD Display</div><div class="tech-role">User feedback</div></div>
-      <div class="tech-cell"><div class="tech-name">Custom PCB</div><div class="tech-role">Power + signal routing</div></div>
-      <div class="tech-cell"><div class="tech-name">3D Printed Enclosure</div><div class="tech-role">Compartments + frame</div></div>
+      <div class="tech-cell"><div class="tech-name">ESP32</div><div class="tech-role">MCU + Bluetooth Classic</div></div>
+      <div class="tech-cell"><div class="tech-name">L298 Driver</div><div class="tech-role">Dual H-bridge motor drive</div></div>
+      <div class="tech-cell"><div class="tech-name">12V DC Motors</div><div class="tech-role">Four-wheel drive</div></div>
+      <div class="tech-cell"><div class="tech-name">Li-ion Pack + BMS</div><div class="tech-role">Motor power</div></div>
+      <div class="tech-cell"><div class="tech-name">Arduino / C++</div><div class="tech-role">Firmware</div></div>
+      <div class="tech-cell"><div class="tech-name">Bluetooth SPP</div><div class="tech-role">Phone control link</div></div>
     </div>
   </section>
 
 
   <div class="cta-bar">
-    <a href="https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_77cd8c9b348d4abe9a654ab3efa89ef3.pdf" target="_blank" class="cta-btn">Read case study ↗</a>
+    <a href="https://github.com/ravisnkrpatel/Microcontroller-Based-Bluetooth-Car" target="_blank" class="cta-btn">View on GitHub ↗</a>
     <a href="../index.html#projects" class="cta-btn outline">More projects</a>
   </div>
 
   <div class="related">
     <div class="related-label">Other projects</div>
     <div class="related-list">
-      <a href="bluetooth-car.html" class="related-item"><div class="related-year">2025 · Robotics · Embedded</div><div class="related-name">Microcontroller Based Bluetooth Car</div></a>
+      <a href="medicine-dispenser.html" class="related-item"><div class="related-year">2024 · Healthcare · IoT</div><div class="related-name">Automated Medicine Dispenser</div></a>
       <a href="mcam.html" class="related-item"><div class="related-year">2024 · Drones · Security</div><div class="related-name">MCAM — Motion Camera with Autonomous Mobility</div></a>
       <a href="advance-trends-ece.html" class="related-item"><div class="related-year">2024 · Research</div><div class="related-name">Advance Trends in ECE</div></a>
     </div>
