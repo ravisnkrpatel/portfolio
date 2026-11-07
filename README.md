@@ -22,7 +22,7 @@ Detailed write-ups live in the [`projects/`](projects/) folder:
 
 - [Automated Medicine Dispenser](projects/medicine-dispenser.html) — QR-driven dispensing system using servo control for clinics, pharmacies, and home care
 - [MCAM](projects/mcam.html)
-- [Advanced Trends in ECE](projects/advance-trends-ece.html)
+- [The Future of ECE — 5G, IoT & AI](projects/advance-trends-ece.html)
 
 ## Structure
 
