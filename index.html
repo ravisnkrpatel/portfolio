@@ -1587,6 +1587,39 @@
       .cv-count { bottom: 1.9rem; }
     }
     @media print { #certViewer { display: none !important; } }
+    /* ── AWARDS & MILESTONES ── */
+    .aw-body { padding: .4rem 0 1rem !important; }
+    .aw-group {
+      font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--accent); padding: 1.1rem 1.4rem .45rem;
+    }
+    .aw-item {
+      display: flex; align-items: center; gap: .95rem; padding: .8rem 1.4rem;
+      color: var(--fg); text-decoration: none; border-top: 1px solid var(--border);
+      transition: background .2s;
+    }
+    a.aw-item:hover { background: var(--surface); }
+    .aw-badge {
+      flex-shrink: 0; width: 38px; height: 38px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: .66rem; font-weight: 500;
+      border: 1px solid var(--border); background: var(--surface); color: var(--fg-soft);
+    }
+    .aw-gold { color: #f5c542; border-color: rgba(245, 197, 66, .35); background: rgba(245, 197, 66, .08); }
+    .aw-silver { color: #c9d1dc; border-color: rgba(201, 209, 220, .3); background: rgba(201, 209, 220, .07); }
+    [data-theme="light"] .aw-gold { color: #a87900; }
+    [data-theme="light"] .aw-silver { color: #6b7685; }
+    .aw-acc { color: var(--accent); border-color: rgba(61, 255, 163, .25); background: rgba(61, 255, 163, .06); }
+    .aw-plain { font-size: .8rem; }
+    .aw-meta { flex: 1; min-width: 0; }
+    .aw-title { font-size: .9rem; font-weight: 500; letter-spacing: -.01em; }
+    .aw-sub { font-size: .76rem; color: var(--fg-muted); margin-top: .15rem; line-height: 1.45; }
+    .aw-arr { color: var(--fg-faint); font-size: .85rem; }
+    a.aw-item:hover .aw-arr { color: var(--accent); }
+    .aw-link {
+      background: none; border: none; padding: 0; cursor: pointer; font: inherit;
+      color: var(--accent); text-decoration: underline; text-underline-offset: 2px;
+    }
   </style>
 <script src="/analytics.js" defer></script>
 </head>
@@ -2072,32 +2105,31 @@
   </div>
 
   <div class="modal" id="awardsModal">
-    <div class="modal-box" style="max-width:480px">
+    <div class="modal-box" style="max-width:520px">
       <div class="modal-header">
-        <span class="modal-title">Awards</span>
+        <span class="modal-title">Awards &amp; Milestones</span>
         <button class="modal-close" onclick="closeModal('awardsModal')">✕</button>
       </div>
-      <div class="modal-body" style="padding:0">
-        <div class="socs">
-          <div class="soc" style="cursor:default"><span class="soc-abbr">01</span>
-            <div class="soc-meta">
-              <div class="soc-platform">1st Place · Engineering Quiz</div>
-              <div class="soc-handle">GM University, Davangere</div>
-            </div>
-          </div>
-          <div class="soc" style="cursor:default"><span class="soc-abbr">02</span>
-            <div class="soc-meta">
-              <div class="soc-platform">2nd Place · Paper Presentation</div>
-              <div class="soc-handle">Karnataka Govt. Polytechnic, Mangalore</div>
-            </div>
-          </div>
-          <div class="soc" style="cursor:default"><span class="soc-abbr">03</span>
-            <div class="soc-meta">
-              <div class="soc-platform">Internship Completion</div>
-              <div class="soc-handle">Siemens COE · NITK Surathkal · Digital Manufacturing</div>
-            </div>
-          </div>
-        </div>
+      <div class="modal-body aw-body">
+        <div class="aw-group">Wins</div>
+          <div class="aw-item"><span class="aw-badge aw-gold">1st</span>
+            <div class="aw-meta"><div class="aw-title">Engineering Quiz · 1st Place</div><div class="aw-sub">GM University, Davangere</div></div></div>
+          <div class="aw-item"><span class="aw-badge aw-silver">2nd</span>
+            <div class="aw-meta"><div class="aw-title">Paper Presentation · 2nd Place</div><div class="aw-sub">Karnataka Govt. Polytechnic, Mangalore</div></div></div>
+        <div class="aw-group">Milestones</div>
+          <div class="aw-item"><span class="aw-badge aw-acc">CoE</span>
+            <div class="aw-meta"><div class="aw-title">Siemens CoE Internship · Completed</div><div class="aw-sub">Digital Manufacturing · NITK Surathkal · Dec 2025 – Apr 2026</div></div></div>
+          <div class="aw-item"><span class="aw-badge aw-acc">MIT</span>
+            <div class="aw-meta"><div class="aw-title">Admitted to Manipal Institute of Technology</div><div class="aw-sub">B.Tech, Electronics &amp; Communication Engineering</div></div></div>
+          <div class="aw-item"><span class="aw-badge aw-acc">13</span>
+            <div class="aw-meta"><div class="aw-title">13 Certifications Earned</div><div class="aw-sub">Including Introduction to IoT (Simplilearn) · <button class="aw-link" onclick="closeModal('awardsModal');openModal('certsModal')">view all</button></div></div></div>
+        <div class="aw-group">Beyond engineering</div>
+          <div class="aw-item"><span class="aw-badge aw-plain">📖</span>
+            <div class="aw-meta"><div class="aw-title">Published Author</div><div class="aw-sub"><em>The Unshakable Mind</em> · Stoicism ebook on Amazon Kindle</div></div></div>
+          <a class="aw-item" href="https://www.youtube.com/@CairnExplains" target="_blank" rel="noopener"><span class="aw-badge aw-plain">▶</span>
+            <div class="aw-meta"><div class="aw-title">Cairn · YouTube Channel</div><div class="aw-sub">Ancient human history &amp; anthropology · @CairnExplains</div></div><span class="aw-arr">↗</span></a>
+          <a class="aw-item" href="https://monkeytype.com/profile/ravisnkr_patel" target="_blank" rel="noopener"><span class="aw-badge aw-plain">90</span>
+            <div class="aw-meta"><div class="aw-title">90 WPM Typist</div><div class="aw-sub">Monkeytype · ravisnkr_patel</div></div><span class="aw-arr">↗</span></a>
       </div>
     </div>
   </div>
