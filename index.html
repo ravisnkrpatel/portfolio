@@ -869,14 +869,23 @@
     @media (max-width:600px) {
       .work-item {
         grid-template-columns: 3rem 1fr;
-        gap: .8rem
+        gap: .6rem .8rem;
+        padding: 1.8rem 0
       }
 
       .work-link {
-        grid-column: 1 / -1;
-        padding-top: 0;
-        margin-top: .4rem;
-        font-size: .65rem;
+        grid-column: 2;
+        justify-self: start;
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        margin-top: .6rem;
+        padding: .55rem 1rem;
+        font-size: .64rem;
+        color: var(--fg-soft);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 999px;
       }
     }
 
@@ -1500,7 +1509,7 @@
     @media (hover:none) {
       .work-item:hover { padding-left: 0 }
       .work-item:hover .work-title { color: var(--fg) }
-      .work-link:hover { color: var(--fg-muted) }
+      .work-link:hover { color: var(--fg-soft) }
       .stack-item:hover { transform: none }
       .timeline-row:hover { padding-left: 0 }
       .contact-row:hover { padding-left: 0; padding-right: 0 }
