@@ -97,8 +97,7 @@
   "sameAs": [
     "https://www.linkedin.com/in/ravishankar-patel-1a775b374",
     "https://github.com/ravisnkrpatel",
-    "https://x.com/Ravishankar_ps",
-    "https://www.instagram.com/ravisnkr.patel/"
+    "https://x.com/Ravishankar_ps"
   ]
 }
 </script>
@@ -292,7 +291,7 @@
       opacity: 0
     }
 
-    body.loaded>*:not(#preloader):not(.modal):not(#authOverlay) {
+    body.loaded>*:not(#preloader):not(.modal) {
       opacity: 1;
       transition: opacity .8s cubic-bezier(.16, 1, .3, 1);
     }
@@ -710,6 +709,8 @@
       color: var(--fg-muted);
       letter-spacing: .06em;
     }
+
+    .visit-count:not(:empty)::before { content: ' · '; }
 
     @media (max-width:640px) {
       section.content {
@@ -1416,219 +1417,6 @@
       transform: translate(3px, -3px)
     }
 
-    #authOverlay {
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, .78);
-      backdrop-filter: blur(14px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity .32s, visibility .32s;
-    }
-
-    #authOverlay.show {
-      opacity: 1;
-      visibility: visible
-    }
-
-    .auth-box {
-      background: linear-gradient(180deg, rgba(28,28,28,.85), rgba(18,18,18,.9));
-      backdrop-filter: blur(32px) saturate(170%);
-      -webkit-backdrop-filter: blur(32px) saturate(170%);
-      border: 1px solid rgba(255,255,255,.1);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 24px 64px rgba(0,0,0,.45);
-      border-radius: 22px;
-      width: min(380px, 92vw);
-      padding: 2rem;
-      position: relative;
-      transform: translateY(14px) scale(.98);
-      transition: transform .4s cubic-bezier(.16, 1, .3, 1);
-    }
-    [data-theme="light"] .auth-box {
-      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(250,250,250,.92));
-      border-color: rgba(10,10,10,.08);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 24px 64px rgba(0,0,0,.16);
-    }
-
-    #authOverlay.show .auth-box {
-      transform: translateY(0) scale(1)
-    }
-
-    .auth-close {
-      position: absolute;
-      top: 1rem;
-      right: 1.2rem;
-      background: none;
-      border: none;
-      color: var(--fg-muted);
-      cursor: pointer;
-      font-size: .95rem;
-    }
-
-    .auth-step {
-      display: none
-    }
-
-    .auth-step.active {
-      display: block
-    }
-
-    .auth-prog {
-      display: flex;
-      gap: .4rem;
-      margin-bottom: 1.5rem
-    }
-
-    .auth-prog-dot {
-      width: 24px;
-      height: 1.5px;
-      background: var(--border);
-      transition: background .3s
-    }
-
-    .auth-prog-dot.done {
-      background: var(--fg)
-    }
-
-    .auth-prog-dot.active {
-      background: var(--fg-soft)
-    }
-
-    .auth-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .62rem;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      margin-bottom: .6rem
-    }
-
-    .auth-title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      letter-spacing: -.02em;
-      margin-bottom: 1.4rem;
-      line-height: 1.15
-    }
-
-    .auth-reasons {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-      margin-bottom: 1.4rem
-    }
-
-    .auth-reason {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: .85rem 1.1rem;
-      font-family: inherit;
-      font-size: .82rem;
-      color: var(--fg-soft);
-      text-align: left;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: all .2s;
-    }
-
-    .auth-reason:hover,
-    .auth-reason.selected {
-      background: var(--surface-2);
-      border-color: var(--fg);
-      color: var(--fg);
-    }
-
-    .auth-math {
-      display: flex;
-      align-items: center;
-      gap: .7rem;
-      margin-bottom: 1.2rem;
-      flex-wrap: wrap
-    }
-
-    .auth-q {
-      font-size: 1.6rem;
-      font-weight: 500;
-      letter-spacing: -.02em
-    }
-
-    .auth-input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: .65rem .9rem;
-      font-family: inherit;
-      font-size: 1rem;
-      color: var(--fg);
-      width: 80px;
-      text-align: center;
-      outline: none;
-      border-radius: 8px;
-      transition: border-color .2s;
-    }
-
-    .auth-input:focus {
-      border-color: var(--fg)
-    }
-
-    .auth-input.wrong {
-      border-color: #ff5555;
-      animation: shake .3s ease
-    }
-
-    @keyframes shake {
-
-      0%,
-      100% {
-        transform: translateX(0)
-      }
-
-      25% {
-        transform: translateX(-5px)
-      }
-
-      75% {
-        transform: translateX(5px)
-      }
-    }
-
-    .auth-err {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .65rem;
-      color: #ff5555;
-      letter-spacing: .06em;
-      min-height: 1rem;
-      margin-bottom: .6rem
-    }
-
-    .auth-btn {
-      background: var(--fg);
-      color: var(--bg);
-      border: none;
-      padding: .85rem 1.6rem;
-      font-family: inherit;
-      font-size: .78rem;
-      font-weight: 500;
-      letter-spacing: -.005em;
-      cursor: pointer;
-      border-radius: 999px;
-      transition: opacity .2s, transform .2s;
-    }
-
-    .auth-btn:hover {
-      opacity: .9;
-      transform: translateY(-1px)
-    }
-
-    .auth-btn:disabled {
-      opacity: .3;
-      cursor: not-allowed;
-      transform: none
-    }
-
     .foot-brand {
       font-size: .85rem;
       font-weight: 500;
@@ -1786,10 +1574,10 @@
     <h1 class="hero-name">ravisnkr<br>patel<span class="pulse-dot">.</span></h1>
     <p class="hero-tag">BTech Electronics &amp; communication student @ MIT Manipal · tech & hardware enthusiast.</p>
     <div class="hero-pills">
-      <button class="pill-btn" onclick="openAuth('gmail')">mail</button>
+      <button class="pill-btn" onclick="showReveal('gmail')">mail</button>
       <a class="pill-btn" href="https://github.com/ravisnkrpatel" target="_blank">github</a>
       <a class="pill-btn" href="https://www.linkedin.com/in/ravishankar-patel-1a775b374" target="_blank">linkedin</a>
-      <button class="pill-btn" onclick="openAuth('resume')">résumé</button>
+      <button class="pill-btn" onclick="openResume()">résumé</button>
     </div>
     <a href="#about" class="scroll-cue"><span class="line"></span>Scroll</a>
   </section>
@@ -2099,7 +1887,7 @@
   </section>
 
   <footer>
-    <div class="foot-center">© 2026 · ravisnkr.patel</div>
+    <div class="foot-center">© 2026 · ravisnkr.patel<span id="visitCount" class="visit-count"></span></div>
   </footer>
 
   <div class="modal" id="certsModal">
@@ -2162,13 +1950,6 @@
       </div>
       <div class="modal-body" style="padding:0">
         <div class="socs">
-          <a href="https://www.instagram.com/ravisnkr.patel/" target="_blank" class="soc"><span
-              class="soc-abbr">IG</span>
-            <div class="soc-meta">
-              <div class="soc-platform">Instagram</div>
-              <div class="soc-handle">@ravisnkr.patel</div>
-            </div><span class="soc-arr">↗</span>
-          </a>
           <a href="https://www.linkedin.com/in/ravishankar-patel-1a775b374" target="_blank" class="soc"><span
               class="soc-abbr">in</span>
             <div class="soc-meta">
@@ -2193,13 +1974,6 @@
             <div class="soc-meta">
               <div class="soc-platform">GitHub</div>
               <div class="soc-handle">ravisnkrpatel</div>
-            </div><span class="soc-arr">↗</span>
-          </a>
-          <a href="https://open.spotify.com/user/31ctoksdke4hctld4qtsbujbgyo4" target="_blank" class="soc"><span
-              class="soc-abbr">SP</span>
-            <div class="soc-meta">
-              <div class="soc-platform">Spotify</div>
-              <div class="soc-handle">My Playlists</div>
             </div><span class="soc-arr">↗</span>
           </a>
           <a href="https://monkeytype.com/profile/ravisnkr_patel" target="_blank" class="soc"><span
@@ -2248,7 +2022,7 @@
   <div class="modal" id="revealModal">
     <div class="modal-box" style="max-width:440px">
       <div class="modal-header">
-        <span class="modal-title">Verified ✓</span>
+        <span class="modal-title">Contact</span>
         <button class="modal-close" onclick="closeModal('revealModal')">✕</button>
       </div>
       <div class="modal-body" style="padding:2rem 1.6rem;text-align:center">
@@ -2265,40 +2039,6 @@
     </div>
   </div>
 
-
-
-  <div id="authOverlay">
-    <div class="auth-box">
-      <button class="auth-close" onclick="closeAuth()">✕</button>
-      <div class="auth-prog">
-        <div class="auth-prog-dot active" id="prog1"></div>
-        <div class="auth-prog-dot" id="prog2"></div>
-      </div>
-      <div class="auth-step active" id="step1">
-        <div class="auth-label">Step 1 of 2</div>
-        <h3 class="auth-title">Why reaching<br>out?</h3>
-        <div class="auth-reasons">
-          <button class="auth-reason" onclick="selReason(this)">Internship / Job</button>
-          <button class="auth-reason" onclick="selReason(this)">Collaboration</button>
-          <button class="auth-reason" onclick="selReason(this)">Academic</button>
-          <button class="auth-reason" onclick="selReason(this)">Just connecting</button>
-        </div>
-        <button class="auth-btn" id="nextBtn" onclick="goStep2()" disabled>Next →</button>
-      </div>
-      <div class="auth-step" id="step2">
-        <div class="auth-label">Step 2 of 2</div>
-        <h3 class="auth-title">Quick check.</h3>
-        <div class="auth-math">
-          <span class="auth-q" id="mathQ"></span>
-          <span class="auth-q">=</span>
-          <input class="auth-input" id="mathAns" type="number" placeholder="?" autocomplete="off"
-            oninput="clearErr()" />
-        </div>
-        <div class="auth-err" id="mathErr"></div>
-        <button class="auth-btn" id="revealBtn" onclick="checkMath()">Reveal ↗</button>
-      </div>
-    </div>
-  </div>
 
   <script>
     function _skipIntro() {
@@ -2398,7 +2138,7 @@
       }
 
       // Bot detection state
-      let _mouseEvents = 0, _touchEvents = 0, _keyEvents = 0, _t0 = Date.now();
+      let _mouseEvents = 0, _touchEvents = 0, _keyEvents = 0, _clicks = 0, _t0 = Date.now();
       let _humanScore = 0;
 
       // Entropy collectors — real humans generate these, bots don't
@@ -2407,9 +2147,10 @@
       document.addEventListener('keydown', () => { _keyEvents++; _humanScore = Math.min(_humanScore + 0.5, 10); }, { passive: true });
       document.addEventListener('scroll', () => { _humanScore = Math.min(_humanScore + 0.4, 10); }, { passive: true });
       document.addEventListener('click', () => { _humanScore = Math.min(_humanScore + 1, 10); }, { passive: true });
+      document.addEventListener('click', () => { _clicks++; }, { capture: true, passive: true });
 
       // Time-on-page check — bots hit immediately
-      function _timeOk() { return (Date.now() - _t0) > 3000; }
+      function _timeOk() { return (Date.now() - _t0) > 1500; }
 
       // Honeypot — hidden field bots fill, humans don't see
       const _hp = document.createElement('input');
@@ -2420,13 +2161,12 @@
 
       function _botCheck() {
         if (_hp.value.length > 0) return false;          // honeypot filled
-        if (!_timeOk()) return false;                  // too fast
-        if (_mouseEvents === 0 && _touchEvents === 0) return false; // zero interaction
-        if (_humanScore < 2) return false;               // insufficient entropy
+        if (!_timeOk()) return false;                    // too fast
+        if (_mouseEvents + _touchEvents + _keyEvents + _clicks === 0) return false; // zero interaction
         return true;
       }
 
-      // Expose decode to auth system — only callable after CAPTCHA + bot check
+      // Expose decode — only returns data after the bot check passes
       window.__revealContact = function (type) {
         if (!_botCheck()) {
           console.warn('Bot check failed');
@@ -2439,69 +2179,13 @@
       };
     })();
 
-    let authTarget = null, mathAnswer = 0;
-    function openAuth(target) {
-      authTarget = target;
-      document.querySelectorAll('.auth-reason').forEach(r => r.classList.remove('selected'));
-      document.getElementById('nextBtn').disabled = true;
-      document.getElementById('mathAns').value = '';
-      document.getElementById('mathErr').textContent = '';
-      if (target === 'resume') {
-        document.getElementById('revealBtn').textContent = 'Open Résumé ↗';
-        document.getElementById('authOverlay').classList.add('show');
-        document.body.style.overflow = 'hidden';
-        showStep(2);
-      } else {
-        document.getElementById('revealBtn').textContent = 'Reveal ↗';
-        showStep(1);
-        document.getElementById('authOverlay').classList.add('show');
-        document.body.style.overflow = 'hidden';
-      }
-    }
-    function closeAuth() { document.getElementById('authOverlay').classList.remove('show'); document.body.style.overflow = ''; authTarget = null; }
-    function showStep(n) {
-      document.querySelectorAll('.auth-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('step' + n).classList.add('active');
-      [1, 2].forEach(i => { const d = document.getElementById('prog' + i); d.className = 'auth-prog-dot' + (i < n ? ' done' : i === n ? ' active' : ''); });
-      if (n === 2) genMath();
-    }
-    function selReason(el) {
-      document.querySelectorAll('.auth-reason').forEach(r => r.classList.remove('selected'));
-      el.classList.add('selected');
-      document.getElementById('nextBtn').disabled = false;
-    }
-    function goStep2() { showStep(2); }
-    function genMath() {
-      const a = Math.floor(Math.random() * 9) + 2, b = Math.floor(Math.random() * 9) + 2;
-      const ops = ['+', '-', '×'], op = ops[Math.floor(Math.random() * ops.length)];
-      let ans; if (op === '+') ans = a + b; else if (op === '-') ans = a - b; else ans = a * b;
-      mathAnswer = ans;
-      document.getElementById('mathQ').textContent = a + ' ' + op + ' ' + b;
-      document.getElementById('mathAns').value = '';
-    }
-    function clearErr() { document.getElementById('mathErr').textContent = ''; }
-    function checkMath() {
-      const val = parseInt(document.getElementById('mathAns').value);
-      if (isNaN(val)) { document.getElementById('mathErr').textContent = 'Enter a number'; return; }
-      if (val !== mathAnswer) {
-        document.getElementById('mathErr').textContent = 'Wrong — try again';
-        document.getElementById('mathAns').classList.add('wrong');
-        setTimeout(() => { document.getElementById('mathAns').classList.remove('wrong'); genMath(); }, 800);
-        return;
-      }
-      const target = authTarget;
-      closeAuth();
-      if (target === 'resume') {
-        setTimeout(() => window.open('https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_af89543ec9b444498d3c5986d0f16fc0.pdf', '_blank'), 300);
-      } else {
-        setTimeout(() => showReveal(target), 300);
-      }
-    }
+    const RESUME_URL = 'https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_af89543ec9b444498d3c5986d0f16fc0.pdf';
+    function openResume() { window.open(RESUME_URL, '_blank'); }
 
     let _revealVal = '', _revealType = '';
     function showReveal(t) {
       const val = window.__revealContact(t);
-      if (!val) { alert('Verification failed. Please try again.'); return; }
+      if (!val) { alert('One sec — try again in a moment.'); return; }
       _revealVal = val; _revealType = t;
       const labels = { phone: 'Phone', gmail: 'Email', icloud: 'iCloud Mail' };
       document.getElementById('revealLabel').textContent = labels[t] || t;
@@ -2529,18 +2213,51 @@
       if (_revealType === 'phone') window.location.href = 'tel:' + _revealVal.replace(/\s+/g, '');
       else window.location.href = 'mailto:' + _revealVal;
     }
-    document.getElementById('authOverlay').addEventListener('click', function (e) { if (e.target === this) closeAuth(); });
-    document.getElementById('phone-link').addEventListener('click', () => openAuth('phone'));
-    document.getElementById('gmail-link').addEventListener('click', () => openAuth('gmail'));
-    document.getElementById('icloud-link').addEventListener('click', () => openAuth('icloud'));
+    // Contact section: tap a row to reveal it in place; tap again to open mail / dialer
+    ['phone', 'gmail', 'icloud'].forEach(t => {
+      const row = document.getElementById(t + '-link');
+      const out = document.getElementById(t + '-display');
+      row.addEventListener('click', () => {
+        if (row.dataset.revealed === '1') {
+          window.location.href = (t === 'phone' ? 'tel:' : 'mailto:') + out.textContent.replace(/\s+/g, '');
+          return;
+        }
+        const val = window.__revealContact(t);
+        if (!val) { out.textContent = 'try again in a sec'; return; }
+        out.textContent = val;
+        row.dataset.revealed = '1';
+      });
+    });
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
-        closeAuth();
         document.querySelectorAll('.modal').forEach(m => m.classList.remove('open'));
         document.body.style.overflow = '';
       }
     });
+  
+    /* VISIT COUNTER — counts real visits to the live site only (not local previews).
+       Open the site once with ?owner=1 to stop your own visits being counted. */
+    (function () {
+      const el = document.getElementById('visitCount');
+      if (!el) return;
+      try { if (location.search.indexOf('owner=1') > -1) localStorage.setItem('psr-owner', '1'); } catch (e) {}
+      let isOwner = false; try { isOwner = localStorage.getItem('psr-owner') === '1'; } catch (e) {}
+      const live = /(^|\.)ravishankarpatel\.in$/.test(location.hostname);
+      let counted = false; try { counted = !!sessionStorage.getItem('psr-counted'); } catch (e) {}
+      const base = 'https://abacus.jasoncameron.dev/';
+      const path = 'ravishankarpatel-in/site-visits';
+      const action = (live && !isOwner && !counted) ? 'hit/' : 'get/';
+      fetch(base + action + path)
+        .then(r => r.json())
+        .then(d => {
+          if (d && typeof d.value === 'number') {
+            el.textContent = d.value.toLocaleString('en-IN') + (d.value === 1 ? ' visit' : ' visits');
+            if (action === 'hit/') { try { sessionStorage.setItem('psr-counted', '1'); } catch (e) {} }
+          }
+        })
+        .catch(() => { /* blocked or offline — footer just shows the copyright */ });
+    })();
   </script>
 </body>
 
