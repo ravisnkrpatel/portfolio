@@ -1514,6 +1514,7 @@
       .pill-btn:hover { transform: none }
     }
   </style>
+<script src="/analytics.js" defer></script>
 </head>
 
 <body class="loading">
@@ -2180,13 +2181,14 @@
     })();
 
     const RESUME_URL = 'https://09a06355-35de-4c3c-8c9d-a76bad2f302e.filesusr.com/ugd/c91f24_af89543ec9b444498d3c5986d0f16fc0.pdf';
-    function openResume() { window.open(RESUME_URL, '_blank'); }
+    function openResume() { if (window.psrTrack) psrTrack('event/resume-open', 'Resume opened'); window.open(RESUME_URL, '_blank'); }
 
     let _revealVal = '', _revealType = '';
     function showReveal(t) {
       const val = window.__revealContact(t);
       if (!val) { alert('One sec — try again in a moment.'); return; }
       _revealVal = val; _revealType = t;
+      if (window.psrTrack) psrTrack('event/reveal-' + t, 'Revealed ' + t);
       const labels = { phone: 'Phone', gmail: 'Email', icloud: 'iCloud Mail' };
       document.getElementById('revealLabel').textContent = labels[t] || t;
       document.getElementById('revealValue').textContent = val;
@@ -2226,6 +2228,7 @@
         if (!val) { out.textContent = 'try again in a sec'; return; }
         out.textContent = val;
         row.dataset.revealed = '1';
+        if (window.psrTrack) psrTrack('event/reveal-' + t, 'Revealed ' + t);
       });
     });
 
