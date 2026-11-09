@@ -1624,11 +1624,8 @@
 <script src="/analytics.js" defer></script>
 </head>
 
-<body class="loading">
+<body class="loaded">
 
-  <div id="preloader">
-    <div class="pre-wrap"><div class="pre-name">ravisnkr<span class="pre-dot"></span>patel</div></div>
-  </div>
   <div id="progress"></div>
 
   <nav class="main-nav" id="mainNav">
@@ -2150,28 +2147,6 @@
 
 
   <script>
-    function _skipIntro() {
-      document.getElementById('preloader').classList.add('done');
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded', 'no-intro');
-    }
-    window.addEventListener('pageshow', (e) => { if (e.persisted) _skipIntro(); });
-    window.addEventListener('load', () => {
-      if (sessionStorage.getItem('psr-v')) { _skipIntro(); return; }
-      sessionStorage.setItem('psr-v', '1');
-      const min = 1400; const t0 = performance.now();
-      const finish = () => {
-        const wait = Math.max(0, min - (performance.now() - t0));
-        setTimeout(() => {
-          document.getElementById('preloader').classList.add('done');
-          document.body.classList.remove('loading');
-          document.body.classList.add('loaded');
-        }, wait);
-      };
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(finish);
-      else finish();
-    });
-
     function setTheme(t) {
       if (t !== 'light' && t !== 'dark') t = 'dark';
       document.documentElement.setAttribute('data-theme', t);
