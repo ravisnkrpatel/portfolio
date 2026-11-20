@@ -1,0 +1,12 @@
+{
+  "name": "Vault",
+  "short_name": "Vault",
+  "start_url": "/v-447auw/",
+  "scope": "/v-447auw/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

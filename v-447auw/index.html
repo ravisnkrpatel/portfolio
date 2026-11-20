@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://script.google.com https://script.googleusercontent.com; base-uri 'none'; form-action 'none'" />
+  <meta name="theme-color" id="metaTheme" content="#0a0a0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Vault" />
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('psr-theme') || 'dark'; } catch (e) {}
+      if (t !== 'light' && t !== 'dark') t = 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      var m = document.getElementById('metaTheme');
+      if (m) m.setAttribute('content', t === 'light' ? '#fafafa' : '#0a0a0a');
+    })();
+  </script>
+  <title>Vault</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/favicon.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="lib/jspdf.umd.min.js" defer></script>
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-raised: #141414;
+      --fg: #ededed;
+      --fg-soft: rgba(237, 237, 237, .7);
+      --fg-muted: rgba(237, 237, 237, .45);
+      --fg-faint: rgba(237, 237, 237, .18);
+      --border: rgba(237, 237, 237, .1);
+      --surface: rgba(237, 237, 237, .04);
+      --surface-2: rgba(237, 237, 237, .08);
+      --accent: #3dffa3;
+      --accent-ink: #04120b;
+      --danger: #ff6b6b;
+      --c-sales: #3dffa3;
+      --c-purchase: #6cb6ff;
+      --c-delivery: #ffb347;
+      --c-urd: #d59bff;
+      --c-expense: #ff8fa3;
+      --c-other: #a8a8a8;
+      --radius: 14px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-raised: #ffffff;
+      --fg: #0a0a0a;
+      --fg-soft: rgba(10, 10, 10, .68);
+      --fg-muted: rgba(10, 10, 10, .48);
+      --fg-faint: rgba(10, 10, 10, .14);
+      --border: rgba(10, 10, 10, .1);
+      --surface: rgba(10, 10, 10, .03);
+      --surface-2: rgba(10, 10, 10, .06);
+      --accent: #15b87f;
+      --accent-ink: #ffffff;
+      --danger: #d93636;
+      --c-sales: #0f9e6b;
+      --c-purchase: #2f7fd8;
+      --c-delivery: #c77700;
+      --c-urd: #8a4fd1;
+      --c-expense: #d6416a;
+      --c-other: #6b6b6b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Geist', -apple-system, system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    [hidden] { display: none !important; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+    /* ---------- buttons & inputs ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 44px; padding: 0 18px; border-radius: 10px;
+      background: var(--surface-2); border: 1px solid var(--border);
+      font-weight: 500; font-size: 15px; white-space: nowrap;
+      transition: background .15s, border-color .15s, opacity .15s, transform .05s;
+    }
+    .btn:hover { border-color: var(--fg-faint); }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { opacity: .45; pointer-events: none; }
+    .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; font-weight: 600; }
+    .btn.danger { color: var(--danger); }
+    .btn.ghost { background: transparent; border-color: transparent; }
+    .btn.icon { width: 44px; padding: 0; }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 13px; color: var(--fg-muted); }
+    .input {
+      height: 46px; width: 100%; padding: 0 14px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border); outline: none;
+      transition: border-color .15s;
+    }
+    .input:focus { border-color: var(--accent); }
+    select.input { appearance: none; padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; }
+    select.input option { background: var(--bg-raised); color: var(--fg); }
+
+    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- login ---------- */
+    #login { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px; }
+    .login-card { width: 100%; max-width: 380px; display: grid; gap: 18px; }
+    .login-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .login-brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 16px var(--accent); }
+    .login-brand span { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--fg-soft); }
+    .login-card h1 { font-size: 28px; font-weight: 600; letter-spacing: -.02em; }
+    .login-card p.sub { color: var(--fg-muted); font-size: 15px; margin-top: -10px; }
+    .pw-wrap { position: relative; }
+    .pw-wrap .input { padding-right: 64px; }
+    .pw-wrap button { position: absolute; right: 6px; top: 6px; height: 34px; padding: 0 10px; font-size: 13px; color: var(--fg-muted); border-radius: 8px; }
+    .error { color: var(--danger); font-size: 14px; min-height: 20px; }
+
+    /* ---------- app header ---------- */
+    header.top {
+      position: sticky; top: 0; z-index: 20;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding-top: env(safe-area-inset-top);
+    }
+    header.top .wrap { height: 60px; display: flex; align-items: center; gap: 8px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.01em; margin-right: auto; min-width: 0; }
+    .brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); flex: none; }
+    .brand small { font-family: 'JetBrains Mono', monospace; font-weight: 400; color: var(--fg-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* ---------- capture ---------- */
+    .capture { padding: 20px 0 8px; display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .capture .btn { height: 64px; font-size: 17px; border-radius: var(--radius); }
+    .capture .btn.primary svg { width: 24px; height: 24px; }
+    .capture .btn.gallery { padding: 0 20px; }
+    @media (max-width: 480px) { .capture .btn.gallery span { display: none; } .capture .btn.gallery { width: 64px; padding: 0; } }
+
+    /* ---------- toolbar ---------- */
+    .toolbar { display: flex; gap: 8px; padding: 14px 0 10px; flex-wrap: wrap; align-items: center; }
+    .toolbar select.input { width: auto; min-width: 150px; }
+    .toolbar .search { flex: 1 1 200px; position: relative; }
+    @media (max-width: 640px) {
+      .toolbar .search { order: -1; flex-basis: 100%; }
+      .toolbar select.input { flex: 1; min-width: 0; }
+      .toolbar .btn { padding: 0 14px; }
+    }
+    .toolbar .search svg { position: absolute; left: 13px; top: 14px; width: 18px; height: 18px; color: var(--fg-muted); pointer-events: none; }
+    .toolbar .search .input { padding-left: 40px; }
+    .toolbar .btn { height: 46px; }
+    .chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px; flex: none;
+      height: 36px; padding: 0 14px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface); font-size: 14px; color: var(--fg-soft);
+    }
+    .chip .sw { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--fg-muted)); }
+    .chip .n { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg-muted); }
+    .chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+    .chip[aria-pressed="true"] .n { color: inherit; opacity: .6; }
+
+    /* ---------- list ---------- */
+    .day { margin: 18px 0 8px; display: flex; align-items: baseline; gap: 10px; }
+    .day h3 { font-size: 15px; font-weight: 600; }
+    .day span { font-size: 13px; color: var(--fg-muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    @media (max-width: 400px) { .grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    .card {
+      position: relative; text-align: left; border-radius: var(--radius); overflow: hidden;
+      background: var(--surface); border: 1px solid var(--border);
+      transition: border-color .15s, transform .1s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { border-color: var(--fg-faint); }
+    .card:active { transform: scale(.985); }
+    .card .thumb { aspect-ratio: 3 / 4; background: var(--surface-2); display: grid; place-items: center; overflow: hidden; }
+    .card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .card .thumb svg { width: 30px; height: 30px; color: var(--fg-faint); }
+    .card .meta { padding: 9px 11px 11px; display: grid; gap: 3px; min-width: 0; }
+    .card .name { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .card .note { font-size: 12px; color: var(--fg-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .04em; color: var(--c);
+    }
+    .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+    .card .check {
+      position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid #fff; background: rgba(0, 0, 0, .35); display: none; place-items: center;
+    }
+    .selecting .card .check { display: grid; }
+    .card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+    .card.sel .check { background: var(--accent); border-color: var(--accent); }
+    .card.sel .check::after { content: ""; width: 10px; height: 6px; border-left: 2.5px solid var(--accent-ink); border-bottom: 2.5px solid var(--accent-ink); transform: rotate(-45deg) translate(1px, -1px); }
+
+    .empty { text-align: center; padding: 60px 16px; color: var(--fg-muted); }
+    .empty svg { width: 42px; height: 42px; margin-bottom: 12px; color: var(--fg-faint); }
+    .loading { display: flex; justify-content: center; padding: 50px; color: var(--fg-muted); }
+
+    /* ---------- selection bar ---------- */
+    .selbar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+      background: var(--bg-raised); border-top: 1px solid var(--border);
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    }
+    .selbar .wrap { display: flex; gap: 8px; align-items: center; padding: 0; }
+    .selbar .count { margin-right: auto; font-weight: 500; }
+    .has-selbar { padding-bottom: 90px; }
+    @media (max-width: 480px) { .selbar .btn .lbl { display: none; } .selbar .btn { padding: 0 14px; } }
+
+    /* ---------- sheets / overlays ---------- */
+    .overlay {
+      position: fixed; inset: 0; z-index: 50; background: rgba(0, 0, 0, .6);
+      display: flex; align-items: flex-end; justify-content: center;
+      animation: fade .15s ease;
+    }
+    @keyframes fade { from { opacity: 0; } }
+    @keyframes rise { from { transform: translateY(24px); opacity: 0; } }
+    .sheet {
+      width: 100%; max-width: 560px; max-height: 94vh; max-height: 94dvh; overflow-y: auto;
+      background: var(--bg-raised); border: 1px solid var(--border); border-bottom: 0;
+      border-radius: 20px 20px 0 0; box-shadow: var(--shadow);
+      padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
+      display: grid; gap: 16px; animation: rise .2s ease;
+    }
+    @media (min-width: 640px) { .overlay { align-items: center; } .sheet { border-radius: 20px; border-bottom: 1px solid var(--border); padding: 22px; } }
+    .sheet-head { display: flex; align-items: center; gap: 10px; }
+    .sheet-head h2 { font-size: 18px; font-weight: 600; margin-right: auto; }
+    .sheet-head .q { font-size: 13px; color: var(--fg-muted); font-family: 'JetBrains Mono', monospace; }
+    .preview { position: relative; border-radius: 12px; overflow: hidden; background: #000; display: grid; place-items: center; height: 36vh; min-height: 200px; }
+    .preview canvas { max-width: 100%; max-height: 100%; display: block; }
+    .preview .rot { position: absolute; right: 10px; bottom: 10px; background: rgba(0, 0, 0, .6); color: #fff; border-color: rgba(255, 255, 255, .2); }
+    .types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    @media (max-width: 380px) { .types { grid-template-columns: repeat(2, 1fr); } }
+    .type {
+      height: 52px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface);
+      display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500; font-size: 14px; padding: 0 6px; text-align: center; line-height: 1.15;
+    }
+    .type .sw { width: 9px; height: 9px; border-radius: 50%; background: var(--c); flex: none; }
+    .type[aria-checked="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .filename { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--fg-muted); padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px dashed var(--border); overflow-wrap: anywhere; }
+    .filename b { color: var(--fg); font-weight: 500; }
+    .sheet-actions { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
+    .sheet-actions .btn { height: 50px; }
+
+    /* ---------- viewer ---------- */
+    #viewer { position: fixed; inset: 0; z-index: 60; background: #000; display: flex; flex-direction: column; color: #ededed; animation: fade .15s ease; }
+    #viewer .vhead, #viewer .vfoot { background: rgba(10, 10, 10, .92); border-color: rgba(255, 255, 255, .08); }
+    #viewer .vhead { display: flex; align-items: center; gap: 8px; padding: calc(8px + env(safe-area-inset-top)) 12px 8px; border-bottom: 1px solid rgba(255,255,255,.08); }
+    #viewer .vhead .t { margin-right: auto; min-width: 0; }
+    #viewer .vhead .t div { font-family: 'JetBrains Mono', monospace; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #viewer .vhead .t small { color: rgba(237,237,237,.5); font-size: 12px; }
+    #viewer .vbody { flex: 1; position: relative; display: grid; place-items: center; overflow: hidden; touch-action: pan-y pinch-zoom; }
+    #viewer .vbody img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; }
+    #viewer .nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.5); color: #fff; border-color: rgba(255,255,255,.15); }
+    #viewer .nav.prev { left: 10px; } #viewer .nav.next { right: 10px; }
+    #viewer .vfoot { border-top: 1px solid rgba(255,255,255,.08); padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); display: grid; gap: 10px; }
+    #viewer .vinfo { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: rgba(237,237,237,.65); }
+    #viewer .vacts { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
+    #viewer .btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.1); color: #ededed; }
+    #viewer .btn.primary { background: var(--accent); color: var(--accent-ink); }
+    #viewer .btn.nav { background: rgba(0,0,0,.6); border-color: rgba(255,255,255,.25); color: #fff; }
+    #viewer .btn.danger { color: #ff6b6b; }
+
+    /* ---------- toast ---------- */
+    #toast {
+      position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+      z-index: 80; max-width: calc(100% - 32px); width: max-content;
+      background: var(--fg); color: var(--bg); padding: 12px 16px; border-radius: 12px; font-size: 14px; font-weight: 500;
+      box-shadow: var(--shadow); animation: rise .2s ease;
+    }
+    #toast.err { background: var(--danger); color: #fff; }
+    .has-selbar #toast { bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+    footer.foot { text-align: center; padding: 40px 16px 30px; font-size: 12px; color: var(--fg-faint); font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+
+<body>
+  <!-- ============ LOGIN ============ -->
+  <main id="login" hidden>
+    <form class="login-card" id="loginForm" autocomplete="on">
+      <div class="login-brand"><i class="dot"></i><span>vault</span></div>
+      <h1>Sign in</h1>
+      <p class="sub">Private access only.</p>
+      <div class="field">
+        <label for="u">Username</label>
+        <input class="input" id="u" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required />
+      </div>
+      <div class="field">
+        <label for="p">Password</label>
+        <div class="pw-wrap">
+          <input class="input" id="p" name="password" type="password" autocomplete="current-password" required />
+          <button type="button" id="pwToggle">Show</button>
+        </div>
+      </div>
+      <div class="error" id="loginErr" role="alert"></div>
+      <button class="btn primary" id="loginBtn" type="submit" style="height:50px">Sign in</button>
+    </form>
+  </main>
+
+  <!-- ============ APP ============ -->
+  <div id="app" hidden>
+    <header class="top">
+      <div class="wrap">
+        <div class="brand"><i class="dot"></i>Vault <small id="who"></small></div>
+        <button class="btn icon ghost" id="themeBtn" title="Switch theme" aria-label="Switch theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="btn icon ghost" id="refreshBtn" title="Refresh" aria-label="Refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        </button>
+        <button class="btn ghost" id="logoutBtn">Sign out</button>
+      </div>
+    </header>
+
+    <main class="wrap" id="main">
+      <section class="capture">
+        <button class="btn primary" id="camBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Take photo of bill
+        </button>
+        <button class="btn gallery" id="galBtn" title="Upload from gallery" aria-label="Upload from gallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Gallery</span>
+        </button>
+      </section>
+
+      <section class="toolbar">
+        <select class="input" id="monthSel" aria-label="Month"></select>
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input class="input" id="search" type="search" placeholder="Search name, note, date…" aria-label="Search" />
+        </div>
+        <button class="btn" id="sortBtn" title="Change order">Newest first</button>
+        <button class="btn" id="selectBtn">Select</button>
+      </section>
+      <nav class="chips" id="chips" aria-label="Filter by type"></nav>
+
+      <section id="list"></section>
+    </main>
+    <footer class="foot">files are stored in a private google drive folder</footer>
+
+    <div class="selbar" id="selbar" hidden>
+      <div class="wrap">
+        <span class="count" id="selCount">0 selected</span>
+        <button class="btn" id="selAll">All</button>
+        <button class="btn" id="selPng" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PNG<span class="lbl">s</span></button>
+        <button class="btn primary" id="selPdf" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><span class="lbl">One </span>PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SAVE SHEET ============ -->
+  <div class="overlay" id="saveSheet" hidden>
+    <form class="sheet" id="saveForm">
+      <div class="sheet-head">
+        <h2>What is this bill?</h2>
+        <span class="q" id="queueInfo"></span>
+        <button type="button" class="btn icon ghost" id="saveClose" aria-label="Cancel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="preview">
+        <canvas id="previewCanvas"></canvas>
+        <button type="button" class="btn icon rot" id="rotBtn" title="Rotate" aria-label="Rotate">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        </button>
+      </div>
+      <div class="types" id="types" role="radiogroup" aria-label="Bill type"></div>
+      <div class="row2">
+        <div class="field">
+          <label for="billDate">Bill date</label>
+          <input class="input" id="billDate" type="date" required />
+        </div>
+        <div class="field">
+          <label for="billNote">Note (optional)</label>
+          <input class="input" id="billNote" maxlength="120" placeholder="e.g. party name" />
+        </div>
+      </div>
+      <div class="filename" id="fileHint">Pick a type to see the file name.</div>
+      <div class="error" id="saveErr" role="alert" style="min-height:0"></div>
+      <div class="sheet-actions">
+        <button type="button" class="btn" id="retakeBtn">Retake</button>
+        <button type="submit" class="btn primary" id="saveBtn" disabled>Save to Drive</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ============ VIEWER ============ -->
+  <div id="viewer" hidden>
+    <div class="vhead">
+      <div class="t"><div id="vName"></div><small id="vPos"></small></div>
+      <button class="btn icon" id="vClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="vbody" id="vBody">
+      <div class="spinner" id="vSpin"></div>
+      <img id="vImg" alt="" hidden />
+      <button class="btn icon nav prev" id="vPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="btn icon nav next" id="vNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="vfoot">
+      <div class="vinfo" id="vInfo"></div>
+      <div class="vacts">
+        <button class="btn" id="vPng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PNG</button>
+        <button class="btn primary" id="vPdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>PDF</button>
+        <button class="btn icon danger" id="vDel" aria-label="Delete" title="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" role="status" hidden></div>
+  <input type="file" id="camIn" accept="image/*" capture="environment" hidden />
+  <input type="file" id="galIn" accept="image/*" multiple hidden />
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ===== Config =====
+    var API = 'https://script.google.com/macros/s/AKfycby13c2yQqicLm5rK6Y8a0itWkWlw324a8TeLOjK6qzze-rrVYsUwhsW4YzIa3K1WsC5/exec';
+    var CATS = [
+      { k: 'SALES', label: 'Sales', c: '--c-sales' },
+      { k: 'PURCHASE', label: 'Purchase', c: '--c-purchase' },
+      { k: 'DELIVERY', label: 'Delivery Note', c: '--c-delivery' },
+      { k: 'URD', label: 'URD Bill', c: '--c-urd' },
+      { k: 'EXPENSE', label: 'Expense', c: '--c-expense' },
+      { k: 'OTHER', label: 'Other', c: '--c-other' }
+    ];
+    var CAT = {}; CATS.forEach(function (c) { CAT[c.k] = c; });
+    var MAX_SIDE = 2400, JPEG_Q = 0.85, THUMB_SIDE = 360, THUMB_Q = 0.7;
+    var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // ===== Helpers =====
+    var $ = function (id) { return document.getElementById(id); };
+    var store = {
+      get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+      del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+    };
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
+    function today() { var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); }
+    function monthLabel(m) { var p = m.split('-'); return MONTHS[+p[1] - 1] + ' ' + p[0]; }
+    function dayLabel(d) {
+      var t = today(), y = new Date(Date.now() - 864e5); y.setMinutes(y.getMinutes() - y.getTimezoneOffset());
+      if (d === t) return 'Today';
+      if (d === y.toISOString().slice(0, 10)) return 'Yesterday';
+      var dt = new Date(d + 'T00:00:00');
+      return dt.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    function fmtSize(b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+    var toastTimer;
+    function toast(msg, isErr) {
+      var t = $('toast'); t.textContent = msg; t.className = isErr ? 'err' : ''; t.hidden = false;
+      clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, isErr ? 5000 : 3200);
+    }
+    function busy(btn, on, label) {
+      if (on) { btn.dataset.html = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>' + (label ? ' ' + esc(label) : ''); }
+      else if (btn.dataset.html != null) { btn.innerHTML = btn.dataset.html; delete btn.dataset.html; btn.disabled = false; }
+    }
+
+    // ===== Session & API =====
+    var session = null;
+    try { session = JSON.parse(store.get('vault-session') || 'null'); } catch (e) { session = null; }
+
+    function api(action, body) {
+      var payload = Object.assign({ action: action, token: session && session.token }, body || {});
+      return fetch(API, { method: 'POST', body: JSON.stringify(payload), redirect: 'follow' })
+        .catch(function () { throw new Error('Can’t reach the server. Check your internet and try again.'); })
+        .then(function (res) {
+          return res.json().catch(function () { throw new Error('Server sent an unexpected reply. Try again.'); });
+        })
+        .then(function (data) {
+          if (!data.ok) {
+            if (data.code === 'AUTH') { signOut(true); }
+            var err = new Error(data.error || 'Something went wrong.'); err.code = data.code; throw err;
+          }
+          return data;
+        });
+    }
+
+    function signOut(expired) {
+      session = null; store.del('vault-session');
+      state.files = []; state.full = {}; state.thumbs = {};
+      closeViewer(); closeSheet(true); setSelecting(false);
+      $('app').hidden = true; $('login').hidden = false;
+      $('loginErr').textContent = expired ? 'Session ended. Please sign in again.' : '';
+      $('p').value = '';
+    }
+
+    // ===== Login =====
+    $('pwToggle').onclick = function () {
+      var p = $('p'); var show = p.type === 'password'; p.type = show ? 'text' : 'password'; this.textContent = show ? 'Hide' : 'Show';
+    };
+    $('loginForm').onsubmit = function (e) {
+      e.preventDefault();
+      var btn = $('loginBtn'); $('loginErr').textContent = '';
+      busy(btn, true, 'Signing in…');
+      api('login', { username: $('u').value, password: $('p').value })
+        .then(function (d) {
+          session = { token: d.token, user: d.user, expires: d.expires };
+          store.set('vault-session', JSON.stringify(session));
+          $('p').value = '';
+          enterApp();
+        })
+        .catch(function (err) { $('loginErr').textContent = err.message; })
+        .then(function () { busy(btn, false); });
+    };
+
+    // ===== App state =====
+    var state = {
+      month: today().slice(0, 7), cat: 'ALL', q: '', newestFirst: true,
+      files: [], months: [], thumbs: {}, full: {}, loading: false,
+      selecting: false, selected: {}
+    };
+    var visible = []; // files currently shown, in display order
+
+    function enterApp() {
+      $('login').hidden = true; $('app').hidden = false;
+      $('who').textContent = '· ' + session.user;
+      renderMonths(); renderChips(); loadList();
+    }
+
+    $('logoutBtn').onclick = function () { signOut(false); };
+    $('refreshBtn').onclick = function () { state.full = {}; loadList(); };
+    $('themeBtn').onclick = function () {
+      var t = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t); store.set('psr-theme', t);
+      $('metaTheme').setAttribute('content', t === 'light' ? '#fafafa' : '#0a0a0a');
+    };
+
+    // ----- month / filters -----
+    function renderMonths() {
+      var set = {}; set[today().slice(0, 7)] = 1; set[state.month] = 1;
+      state.months.forEach(function (m) { set[m] = 1; });
+      var ms = Object.keys(set).sort().reverse();
+      $('monthSel').innerHTML = ms.map(function (m) { return '<option value="' + m + '"' + (m === state.month ? ' selected' : '') + '>' + monthLabel(m) + '</option>'; }).join('');
+    }
+    $('monthSel').onchange = function () { state.month = this.value; setSelecting(false); loadList(); };
+    $('search').oninput = function () { state.q = this.value.trim().toLowerCase(); renderList(); };
+    $('sortBtn').onclick = function () { state.newestFirst = !state.newestFirst; this.textContent = state.newestFirst ? 'Newest first' : 'Oldest first'; renderList(); };
+
+    function renderChips() {
+      var counts = { ALL: state.files.length };
+      state.files.forEach(function (f) { counts[f.category] = (counts[f.category] || 0) + 1; });
+      var html = '<button class="chip" data-cat="ALL" aria-pressed="' + (state.cat === 'ALL') + '">All <span class="n">' + (counts.ALL || 0) + '</span></button>';
+      CATS.forEach(function (c) {
+        html += '<button class="chip" data-cat="' + c.k + '" style="--c:var(' + c.c + ')" aria-pressed="' + (state.cat === c.k) + '"><i class="sw"></i>' + c.label + ' <span class="n">' + (counts[c.k] || 0) + '</span></button>';
+      });
+      $('chips').innerHTML = html;
+    }
+    $('chips').onclick = function (e) {
+      var b = e.target.closest('.chip'); if (!b) return;
+      state.cat = b.dataset.cat; renderChips(); renderList();
+    };
+
+    // ----- list -----
+    var listReq = 0;
+    function loadList() {
+      var my = ++listReq;
+      state.loading = true; renderList();
+      api('list', { month: state.month })
+        .then(function (d) {
+          if (my !== listReq) return;
+          state.files = d.files; state.months = d.months || [];
+          state.loading = false;
+          renderMonths(); renderChips(); renderList(); loadThumbs();
+        })
+        .catch(function (err) {
+          if (my !== listReq) return;
+          state.loading = false; renderList(err.message);
+        });
+    }
+
+    function sortFiles(a, b) {
+      if (a.date !== b.date) return (a.date < b.date ? -1 : 1) * (state.newestFirst ? -1 : 1);
+      var ca = CATS.findIndex(function (c) { return c.k === a.category; }), cb = CATS.findIndex(function (c) { return c.k === b.category; });
+      if (ca !== cb) return ca - cb;
+      return a.seq - b.seq;
+    }
+
+    var PLACEHOLDER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>';
+
+    function renderList(errMsg) {
+      var el = $('list');
+      if (state.loading) { el.innerHTML = '<div class="loading"><span class="spinner"></span></div>'; return; }
+      if (errMsg) {
+        el.innerHTML = '<div class="empty"><p>' + esc(errMsg) + '</p><p style="margin-top:14px"><button class="btn" id="retryList">Try again</button></p></div>';
+        $('retryList').onclick = loadList; return;
+      }
+      var q = state.q;
+      visible = state.files.filter(function (f) {
+        if (state.cat !== 'ALL' && f.category !== state.cat) return false;
+        if (!q) return true;
+        var label = CAT[f.category] ? CAT[f.category].label : '';
+        return (f.name + ' ' + f.note + ' ' + f.by + ' ' + f.date + ' ' + label + ' ' + dayLabel(f.date)).toLowerCase().indexOf(q) !== -1;
+      }).sort(sortFiles);
+
+      if (!visible.length) {
+        var none = state.files.length ? 'No bills match this filter.' : 'No bills in ' + monthLabel(state.month) + ' yet.';
+        el.innerHTML = '<div class="empty">' + PLACEHOLDER + '<p>' + none + '</p></div>';
+        return;
+      }
+      var html = '', lastDay = null, i;
+      for (i = 0; i < visible.length; i++) {
+        var f = visible[i];
+        if (f.date !== lastDay) {
+          if (lastDay !== null) html += '</div>';
+          var n = visible.filter(function (x) { return x.date === f.date; }).length;
+          html += '<div class="day"><h3>' + esc(dayLabel(f.date)) + '</h3><span>' + n + ' bill' + (n > 1 ? 's' : '') + '</span></div><div class="grid">';
+          lastDay = f.date;
+        }
+        var c = CAT[f.category] || CAT.OTHER, th = state.thumbs[f.id];
+        html += '<button class="card' + (state.selected[f.id] ? ' sel' : '') + '" data-id="' + esc(f.id) + '" style="--c:var(' + c.c + ')">' +
+          '<div class="thumb">' + (th ? '<img loading="lazy" alt="" src="data:image/jpeg;base64,' + th + '">' : PLACEHOLDER) + '</div>' +
+          '<div class="meta"><span class="badge">' + esc(c.label) + '</span><span class="name">' + esc(f.name) + '</span>' +
+          (f.note ? '<span class="note">' + esc(f.note) + '</span>' : '') + '</div><i class="check"></i></button>';
+      }
+      html += '</div>';
+      el.innerHTML = html;
+    }
+
+    $('list').onclick = function (e) {
+      var card = e.target.closest('.card'); if (!card) return;
+      var id = card.dataset.id;
+      if (state.selecting) {
+        if (state.selected[id]) delete state.selected[id]; else state.selected[id] = true;
+        card.classList.toggle('sel', !!state.selected[id]); updateSelbar(); return;
+      }
+      openViewer(visible.findIndex(function (f) { return f.id === id; }));
+    };
+
+    function loadThumbs() {
+      var groups = {}, any = false;
+      state.files.forEach(function (f) {
+        if (state.thumbs[f.id]) return;
+        var key = f.category + '|' + f.date.slice(0, 7);
+        (groups[key] = groups[key] || []).push(f.id); any = true;
+      });
+      if (!any) return;
+      api('thumbs', { groups: groups }).then(function (d) {
+        Object.assign(state.thumbs, d.thumbs || {});
+        renderList();
+      }).catch(function () { /* previews are optional */ });
+    }
+
+    // ----- selection -----
+    function setSelecting(on) {
+      state.selecting = on; state.selected = {};
+      $('selectBtn').textContent = on ? 'Cancel' : 'Select';
+      $('main').classList.toggle('selecting', on);
+      $('selbar').hidden = !on; document.body.classList.toggle('has-selbar', on);
+      document.querySelectorAll('.card.sel').forEach(function (c) { c.classList.remove('sel'); });
+      updateSelbar();
+    }
+    function selectedFiles() { return visible.filter(function (f) { return state.selected[f.id]; }); }
+    function updateSelbar() {
+      var n = selectedFiles().length;
+      $('selCount').textContent = n + ' selected';
+      $('selPng').disabled = $('selPdf').disabled = !n;
+      $('selAll').textContent = n && n === visible.length ? 'None' : 'All';
+    }
+    $('selectBtn').onclick = function () { setSelecting(!state.selecting); };
+    $('selAll').onclick = function () {
+      var all = selectedFiles().length !== visible.length;
+      state.selected = {}; if (all) visible.forEach(function (f) { state.selected[f.id] = true; });
+      renderList(); updateSelbar();
+    };
+    $('selPdf').onclick = function () {
+      var files = selectedFiles(), btn = this;
+      busy(btn, true);
+      fetchAll(files, function (i) { btn.innerHTML = '<span class="spinner"></span> ' + i + '/' + files.length; })
+        .then(function (items) {
+          var name = files.length === 1 ? files[0].name.replace(/\.\w+$/, '') : 'Bills_' + state.month + '_' + files.length + '-files';
+          return makePdf(items, name + '.pdf');
+        })
+        .then(function () { toast('PDF downloaded'); })
+        .catch(function (err) { toast(err.message, true); })
+        .then(function () { busy(btn, false); });
+    };
+    $('selPng').onclick = function () {
+      var files = selectedFiles(), btn = this;
+      busy(btn, true);
+      fetchAll(files, function (i) { btn.innerHTML = '<span class="spinner"></span> ' + i + '/' + files.length; })
+        .then(function (items) {
+          return items.reduce(function (p, it) { return p.then(function () { return downloadPng(it).then(function () { return wait(400); }); }); }, Promise.resolve());
+        })
+        .then(function () { toast(files.length + ' PNG' + (files.length > 1 ? 's' : '') + ' downloaded'); })
+        .catch(function (err) { toast(err.message, true); })
+        .then(function () { busy(btn, false); });
+    };
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+    // ===== Full images & downloads =====
+    function getFull(f) {
+      if (state.full[f.id]) return Promise.resolve(state.full[f.id]);
+      return api('file', { id: f.id }).then(function (d) {
+        var item = { name: d.name, src: 'data:' + d.mimeType + ';base64,' + d.data, mime: d.mimeType };
+        state.full[f.id] = item; return item;
+      });
+    }
+    function fetchAll(files, onProgress) {
+      var out = [], i = 0;
+      return files.reduce(function (p, f) {
+        return p.then(function () { return getFull(f); }).then(function (it) { out.push(it); onProgress(++i); });
+      }, Promise.resolve()).then(function () { return out; });
+    }
+    function loadImg(src) {
+      return new Promise(function (res, rej) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { rej(new Error('Could not open image.')); }; im.src = src; });
+    }
+    function saveBlob(blob, name) {
+      var url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
+    }
+    function downloadPng(item) {
+      return loadImg(item.src).then(function (im) {
+        var c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
+        c.getContext('2d').drawImage(im, 0, 0);
+        return new Promise(function (res, rej) {
+          c.toBlob(function (b) { if (!b) return rej(new Error('Could not make PNG.')); saveBlob(b, item.name.replace(/\.\w+$/, '') + '.png'); res(); }, 'image/png');
+        });
+      });
+    }
+    function makePdf(items, filename) {
+      if (!window.jspdf) return Promise.reject(new Error('PDF tool still loading — try again in a second.'));
+      var doc = null, M = 8;
+      return items.reduce(function (p, it) {
+        return p.then(function () { return loadImg(it.src); }).then(function (im) {
+          var land = im.naturalWidth > im.naturalHeight, orient = land ? 'l' : 'p';
+          if (!doc) doc = new window.jspdf.jsPDF({ orientation: orient, unit: 'mm', format: 'a4', compress: true });
+          else doc.addPage('a4', orient);
+          var pw = doc.internal.pageSize.getWidth(), ph = doc.internal.pageSize.getHeight();
+          var s = Math.min((pw - 2 * M) / im.naturalWidth, (ph - 2 * M) / im.naturalHeight);
+          var w = im.naturalWidth * s, h = im.naturalHeight * s;
+          doc.addImage(it.src, /png/i.test(it.mime) ? 'PNG' : 'JPEG', (pw - w) / 2, (ph - h) / 2, w, h, undefined, 'FAST');
+        });
+      }, Promise.resolve()).then(function () { saveBlob(doc.output('blob'), filename); });
+    }
+
+    // ===== Viewer =====
+    var vIndex = -1, vToken = 0;
+    function openViewer(i) {
+      if (i < 0 || i >= visible.length) return;
+      vIndex = i; var f = visible[i], c = CAT[f.category] || CAT.OTHER, my = ++vToken;
+      $('viewer').hidden = false; document.body.style.overflow = 'hidden';
+      $('vName').textContent = f.name;
+      $('vPos').textContent = (i + 1) + ' of ' + visible.length;
+      $('vInfo').innerHTML = '<span class="badge" style="--c:var(' + c.c + ')">' + esc(c.label) + '</span><span>' + esc(dayLabel(f.date)) + '</span>' +
+        (f.note ? '<span>“' + esc(f.note) + '”</span>' : '') + (f.by ? '<span>by ' + esc(f.by) + '</span>' : '') + '<span>' + fmtSize(f.size) + '</span>';
+      $('vPrev').hidden = i === 0; $('vNext').hidden = i === visible.length - 1;
+      var img = $('vImg'), th = state.thumbs[f.id];
+      if (th) { img.src = 'data:image/jpeg;base64,' + th; img.hidden = false; } else { img.hidden = true; }
+      $('vSpin').hidden = false;
+      ['vPng', 'vPdf', 'vDel'].forEach(function (b) { $(b).disabled = true; });
+      getFull(f).then(function (it) {
+        if (my !== vToken) return;
+        img.src = it.src; img.hidden = false; $('vSpin').hidden = true;
+        ['vPng', 'vPdf', 'vDel'].forEach(function (b) { $(b).disabled = false; });
+      }).catch(function (err) {
+        if (my !== vToken) return;
+        $('vSpin').hidden = true; $('vDel').disabled = false; toast(err.message, true);
+      });
+    }
+    function closeViewer() { vToken++; $('viewer').hidden = true; document.body.style.overflow = ''; $('vImg').removeAttribute('src'); }
+    $('vClose').onclick = closeViewer;
+    $('vPrev').onclick = function () { openViewer(vIndex - 1); };
+    $('vNext').onclick = function () { openViewer(vIndex + 1); };
+    document.addEventListener('keydown', function (e) {
+      if (!$('viewer').hidden) {
+        if (e.key === 'Escape') closeViewer();
+        else if (e.key === 'ArrowLeft') openViewer(vIndex - 1);
+        else if (e.key === 'ArrowRight') openViewer(vIndex + 1);
+      } else if (!$('saveSheet').hidden && e.key === 'Escape') closeSheet();
+    });
+    (function () {
+      var x0 = null, y0 = 0, body = $('vBody');
+      body.addEventListener('touchstart', function (e) { if (e.touches.length === 1) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; } else x0 = null; }, { passive: true });
+      body.addEventListener('touchend', function (e) {
+        if (x0 === null) return; var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) openViewer(vIndex + (dx < 0 ? 1 : -1));
+      });
+    })();
+    $('vPng').onclick = function () {
+      var f = visible[vIndex], btn = this; busy(btn, true);
+      getFull(f).then(downloadPng).then(function () { toast('PNG downloaded'); })
+        .catch(function (err) { toast(err.message, true); }).then(function () { busy(btn, false); });
+    };
+    $('vPdf').onclick = function () {
+      var f = visible[vIndex], btn = this; busy(btn, true);
+      getFull(f).then(function (it) { return makePdf([it], f.name.replace(/\.\w+$/, '') + '.pdf'); })
+        .then(function () { toast('PDF downloaded'); })
+        .catch(function (err) { toast(err.message, true); }).then(function () { busy(btn, false); });
+    };
+    $('vDel').onclick = function () {
+      var f = visible[vIndex], btn = this;
+      if (!confirm('Delete ' + f.name + '?\n\nIt goes to the Google Drive bin and can be restored there for 30 days.')) return;
+      busy(btn, true);
+      api('trash', { id: f.id }).then(function () {
+        state.files = state.files.filter(function (x) { return x.id !== f.id; });
+        delete state.full[f.id]; delete state.thumbs[f.id];
+        renderChips(); renderList();
+        if (visible.length) openViewer(Math.min(vIndex, visible.length - 1)); else closeViewer();
+        toast('Moved to Drive bin');
+      }).catch(function (err) { toast(err.message, true); }).then(function () { busy(btn, false); });
+    };
+
+    // ===== Capture & save =====
+    var queue = [], queueTotal = 0, cur = null; // cur = { src: ImageBitmap|HTMLImageElement, rot }
+    var chosenCat = null;
+
+    $('camBtn').onclick = function () { $('camIn').value = ''; $('camIn').click(); };
+    $('galBtn').onclick = function () { $('galIn').value = ''; $('galIn').click(); };
+    $('camIn').onchange = function () { startQueue(this.files); };
+    $('galIn').onchange = function () { startQueue(this.files); };
+
+    function startQueue(fileList) {
+      var files = Array.prototype.filter.call(fileList || [], function (f) { return /^image\//.test(f.type) || /\.(jpe?g|png|heic|webp)$/i.test(f.name); });
+      if (!files.length) return;
+      queue = files; queueTotal = files.length;
+      $('billDate').value = today(); $('billNote').value = '';
+      nextInQueue();
+    }
+
+    function nextInQueue() {
+      if (!queue.length) { closeSheet(true); return; }
+      var file = queue.shift();
+      chosenCat = null; renderTypes(); updateHint();
+      $('saveErr').textContent = ''; $('billNote').value = '';
+      $('queueInfo').textContent = queueTotal > 1 ? (queueTotal - queue.length) + ' / ' + queueTotal : '';
+      $('saveSheet').hidden = false; document.body.style.overflow = 'hidden';
+      var cv = $('previewCanvas'); cv.width = 1; cv.height = 1;
+      decode(file).then(function (src) {
+        cur = { src: src, rot: 0 }; drawPreview();
+      }).catch(function () {
+        $('saveErr').textContent = 'This photo format can’t be opened here. Try taking it with the camera button.';
+        cur = null; updateSaveBtn();
+      });
+    }
+
+    function decode(file) {
+      if (window.createImageBitmap) {
+        return createImageBitmap(file, { imageOrientation: 'from-image' }).catch(function () { return decodeViaImg(file); });
+      }
+      return decodeViaImg(file);
+    }
+    function decodeViaImg(file) {
+      var url = URL.createObjectURL(file);
+      return loadImg(url).then(function (im) { URL.revokeObjectURL(url); return im; }, function (e) { URL.revokeObjectURL(url); throw e; });
+    }
+    function srcSize(s) { return { w: s.naturalWidth || s.width, h: s.naturalHeight || s.height }; }
+
+    /** Draws cur.src rotated by cur.rot into a canvas whose longest side is <= maxSide. */
+    function render(maxSide) {
+      var sz = srcSize(cur.src), scale = Math.min(1, maxSide / Math.max(sz.w, sz.h));
+      var w = Math.round(sz.w * scale), h = Math.round(sz.h * scale), turn = cur.rot % 180 !== 0;
+      var c = document.createElement('canvas'); c.width = turn ? h : w; c.height = turn ? w : h;
+      var g = c.getContext('2d');
+      g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+      g.translate(c.width / 2, c.height / 2); g.rotate(cur.rot * Math.PI / 180);
+      g.imageSmoothingQuality = 'high';
+      g.drawImage(cur.src, -w / 2, -h / 2, w, h);
+      return c;
+    }
+    function drawPreview() {
+      var small = render(1000), cv = $('previewCanvas');
+      cv.width = small.width; cv.height = small.height; cv.getContext('2d').drawImage(small, 0, 0);
+      updateSaveBtn();
+    }
+    $('rotBtn').onclick = function () { if (!cur) return; cur.rot = (cur.rot + 90) % 360; drawPreview(); };
+
+    function renderTypes() {
+      $('types').innerHTML = CATS.map(function (c) {
+        return '<button type="button" class="type" role="radio" data-k="' + c.k + '" style="--c:var(' + c.c + ')" aria-checked="' + (chosenCat === c.k) + '"><i class="sw"></i>' + c.label + '</button>';
+      }).join('');
+    }
+    $('types').onclick = function (e) {
+      var b = e.target.closest('.type'); if (!b) return;
+      chosenCat = b.dataset.k; renderTypes(); updateHint(); updateSaveBtn();
+    };
+    $('billDate').onchange = updateHint;
+
+    function updateHint() {
+      var d = $('billDate').value;
+      if (!chosenCat) { $('fileHint').textContent = 'Pick a type to see the file name.'; return; }
+      if (!d) { $('fileHint').textContent = 'Pick the bill date.'; return; }
+      var known = state.files.filter(function (f) { return f.category === chosenCat && f.date === d; })
+        .reduce(function (m, f) { return Math.max(m, f.seq || 0); }, 0);
+      var guess = d.slice(0, 7) === state.month ? ('00' + (known + 1)).slice(-3) : 'NNN';
+      $('fileHint').innerHTML = 'Saves as <b>' + chosenCat + '_' + d + '_' + guess + '.jpg</b><br>in ' + esc(CAT[chosenCat].label) + ' / ' + d.slice(0, 7);
+    }
+    function updateSaveBtn() { $('saveBtn').disabled = !(cur && chosenCat && $('billDate').value); }
+
+    function closeSheet(force) {
+      if (!force) {
+        if ($('saveBtn').dataset.html != null) return; // upload in progress
+        if (cur && !confirm('Discard this photo?')) return;
+      }
+      queue = []; cur = null; $('saveSheet').hidden = true;
+      if ($('viewer').hidden) document.body.style.overflow = '';
+    }
+    $('saveClose').onclick = function () { closeSheet(false); };
+    $('retakeBtn').onclick = function () { queue = []; closeSheet(true); $('camIn').value = ''; $('camIn').click(); };
+
+    function canvasB64(c, q) {
+      return new Promise(function (res, rej) {
+        c.toBlob(function (b) {
+          if (!b) return rej(new Error('Could not process photo.'));
+          var r = new FileReader(); r.onload = function () { res(String(r.result).split(',')[1]); }; r.onerror = function () { rej(new Error('Could not process photo.')); }; r.readAsDataURL(b);
+        }, 'image/jpeg', q);
+      });
+    }
+
+    $('saveForm').onsubmit = function (e) {
+      e.preventDefault();
+      if (!cur || !chosenCat) return;
+      var btn = $('saveBtn'), date = $('billDate').value, note = $('billNote').value.trim(), cat = chosenCat;
+      $('saveErr').textContent = ''; busy(btn, true, 'Saving…'); $('retakeBtn').disabled = true;
+      var full = render(MAX_SIDE), thumb = render(THUMB_SIDE), thumbB64;
+      canvasB64(thumb, THUMB_Q).then(function (t) { thumbB64 = t; return canvasB64(full, JPEG_Q); })
+        .then(function (data) {
+          return api('upload', { category: cat, date: date, note: note, data: data, mimeType: 'image/jpeg', thumb: thumbB64 });
+        })
+        .then(function (d) {
+          state.thumbs[d.file.id] = thumbB64;
+          if (d.file.date.slice(0, 7) === state.month) {
+            state.files.push(d.file); renderChips(); renderList();
+          } else if (state.months.indexOf(d.file.date.slice(0, 7)) === -1) {
+            state.months.push(d.file.date.slice(0, 7)); renderMonths();
+          }
+          toast('Saved as ' + d.file.name);
+          busy(btn, false); $('retakeBtn').disabled = false;
+          nextInQueue();
+        })
+        .catch(function (err) {
+          busy(btn, false); $('retakeBtn').disabled = false; updateSaveBtn();
+          $('saveErr').textContent = err.message + ' Your photo is still here — tap Save to retry.';
+        });
+    };
+
+    // ===== Start =====
+    if (session && session.token && session.expires > Date.now()) enterApp();
+    else { store.del('vault-session'); session = null; $('login').hidden = false; }
+  })();
+  </script>
+</body>
+
+</html>
