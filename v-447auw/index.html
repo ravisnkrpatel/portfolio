@@ -44,9 +44,9 @@
       --surface: rgba(237, 237, 237, .035);
       --surface-2: rgba(237, 237, 237, .07);
       --surface-3: rgba(237, 237, 237, .11);
-      --accent: #a78bfa;
-      --accent-ink: #12062b;
-      --accent-soft: rgba(167, 139, 250, .14);
+      --accent: #f2f2f2;
+      --accent-ink: #0a0a0a;
+      --accent-soft: rgba(255, 255, 255, .12);
       --danger: #ff6b6b;
       --c-sales: #3dffa3;
       --c-purchase: #6cb6ff;
@@ -75,9 +75,9 @@
       --surface: rgba(10, 10, 10, .025);
       --surface-2: rgba(10, 10, 10, .05);
       --surface-3: rgba(10, 10, 10, .08);
-      --accent: #7c3aed;
+      --accent: #0a0a0a;
       --accent-ink: #ffffff;
-      --accent-soft: rgba(124, 58, 237, .1);
+      --accent-soft: rgba(10, 10, 10, .08);
       --danger: #d93636;
       --c-sales: #0f9e6b;
       --c-purchase: #2f7fd8;
@@ -225,7 +225,7 @@
     .avatar {
       width: 32px; height: 32px; border-radius: 50%; flex: none;
       display: grid; place-items: center; font-weight: 600; font-size: 14px; text-transform: uppercase;
-      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 55%, #ec4899));
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #808080));
       color: var(--accent-ink);
     }
     .avatar.img { background: #000; box-shadow: 0 0 0 1px var(--border-strong); overflow: hidden; }
@@ -507,6 +507,196 @@
 
     footer.foot { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 44px 16px 32px; font-size: 12px; color: var(--fg-muted); }
     footer.foot .i { width: 14px; height: 14px; }
+
+    /* =================================================================
+       GLASS — same language as the main portfolio (frosted pills,
+       top-edge highlight, soft drifting glow behind everything)
+       ================================================================= */
+    :root {
+      --spring: cubic-bezier(.16, 1, .3, 1);
+      --glass: linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.03));
+      --glass-strong: linear-gradient(180deg, rgba(34,34,34,.66), rgba(16,16,16,.74));
+      --glass-sheet: linear-gradient(180deg, rgba(30,30,30,.8), rgba(16,16,16,.88));
+      --glass-border: rgba(255,255,255,.12);
+      --glass-hl: inset 0 1px 0 rgba(255,255,255,.13);
+      --glass-hl-strong: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(0,0,0,.2);
+      --blur: blur(24px) saturate(170%);
+      --blur-strong: blur(32px) saturate(190%);
+      --glow-a: rgba(255, 255, 255, .13);
+      --glow-b: rgba(255, 255, 255, .07);
+      --glow-c: rgba(255, 255, 255, .04);
+    }
+    [data-theme="light"] {
+      --glass: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.5));
+      --glass-strong: linear-gradient(180deg, rgba(255,255,255,.82), rgba(250,250,250,.72));
+      --glass-sheet: linear-gradient(180deg, rgba(255,255,255,.9), rgba(250,250,250,.92));
+      --glass-border: rgba(10,10,10,.08);
+      --glass-hl: inset 0 1px 0 rgba(255,255,255,.9);
+      --glass-hl-strong: inset 0 1px 0 rgba(255,255,255,.95);
+      --glow-a: rgba(0, 0, 0, .07);
+      --glow-b: rgba(0, 0, 0, .05);
+      --glow-c: rgba(0, 0, 0, .03);
+    }
+
+    /* ambient glow so the glass has something to refract */
+    body::before, body::after {
+      content: ""; position: fixed; z-index: -1; pointer-events: none; border-radius: 50%; filter: blur(40px);
+    }
+    body::before {
+      width: 560px; height: 560px; top: -180px; left: 50%; margin-left: -380px;
+      background: radial-gradient(circle, var(--glow-a) 0%, transparent 65%);
+      animation: drift 16s ease-in-out infinite;
+    }
+    body::after {
+      width: 520px; height: 520px; bottom: -220px; right: -160px;
+      background: radial-gradient(circle, var(--glow-b) 0%, var(--glow-c) 40%, transparent 70%);
+      animation: drift 20s ease-in-out infinite reverse;
+    }
+    @keyframes drift { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, 30px) scale(1.08); } }
+    body { background: var(--bg); isolation: isolate; }
+    #login { background: transparent; }
+
+    /* --- glass primitives --- */
+    .btn, .input, .chip, .hero, .card, .user, .day .cnt, .empty .ring, .type, .filename, .sheet-head .q, .preview {
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+    .btn {
+      border-radius: 999px; background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-hl);
+      transition: background .3s var(--spring), border-color .3s, transform .35s var(--spring), box-shadow .3s, opacity .2s;
+    }
+    .btn:hover { background: var(--surface-2); border-color: var(--border-strong); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0) scale(.97); }
+    .btn.primary {
+      background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 82%, #fff), var(--accent));
+      border-color: color-mix(in srgb, var(--accent) 70%, #fff);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.45), 0 8px 28px -10px var(--accent);
+    }
+    .btn.primary:hover { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 72%, #fff), var(--accent)); filter: none; }
+    [data-theme="light"] .btn.primary { background: linear-gradient(180deg, #333, #0a0a0a); border-color: #0a0a0a; box-shadow: inset 0 1px 0 rgba(255,255,255,.22), 0 8px 24px -10px rgba(0,0,0,.6); }
+    [data-theme="light"] .btn.primary:hover { background: linear-gradient(180deg, #444, #111); }
+    .btn.primary { box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 8px 28px -12px rgba(255,255,255,.5); }
+    .btn.ghost { background: transparent; border-color: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .btn.ghost:hover { background: var(--surface-2); transform: none; }
+    .btn.active { background: var(--fg); color: var(--bg); border-color: var(--fg); box-shadow: none; }
+    .input { border-radius: 999px; background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-hl); padding-left: 18px; }
+    .input:focus { background: var(--glass); border-color: var(--accent); box-shadow: var(--glass-hl), 0 0 0 4px var(--accent-soft); }
+    .control > .i { left: 16px; z-index: 1; }
+    .pw-wrap .eye { z-index: 1; }
+    .control > .i + .input { padding-left: 46px; }
+    .control .caret { right: 16px; }
+    .pw-wrap .eye { right: 5px; border-radius: 999px; }
+
+    /* --- header: floating pill, like the portfolio nav --- */
+    header.top {
+      background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none;
+      padding: calc(12px + env(safe-area-inset-top)) 12px 0;
+    }
+    header.top .wrap {
+      height: 58px; max-width: 1048px; padding: 0 8px 0 9px; gap: 4px;
+      background: var(--glass-strong); border: 1px solid var(--glass-border); border-radius: 999px;
+      -webkit-backdrop-filter: var(--blur-strong); backdrop-filter: var(--blur-strong);
+      box-shadow: 0 8px 32px rgba(0,0,0,.3), var(--glass-hl-strong);
+    }
+    [data-theme="light"] header.top .wrap { box-shadow: 0 8px 32px rgba(0,0,0,.07), var(--glass-hl-strong); }
+    .brand .logo { width: 40px; height: 40px; border-radius: 50%; }
+    .brand .logo .i { width: 20px; height: 20px; }
+    .user { background: transparent; border: 0; box-shadow: none; padding: 0 12px 0 4px; height: 44px; margin-right: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .user::before { content: ""; width: 1px; height: 20px; background: var(--border-strong); margin-right: 8px; order: -1; }
+    header .btn.icon { width: 40px; height: 40px; color: var(--fg-muted); }
+    @media (max-width: 520px) { .user { padding: 0 2px; } .user::before { display: none; } }
+
+    /* --- hero / add-bill card --- */
+    .hero {
+      margin-top: 16px; border-radius: 26px; background: var(--glass); border-color: var(--glass-border);
+      box-shadow: var(--glass-hl), 0 4px 24px rgba(0,0,0,.18);
+    }
+    [data-theme="light"] .hero { box-shadow: var(--glass-hl), 0 4px 20px rgba(0,0,0,.06); }
+    .hero .btn { border-radius: 999px; }
+
+    /* --- chips --- */
+    .chip { background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-hl); transition: all .3s var(--spring); }
+    .chip:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+    .chip[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); box-shadow: 0 6px 18px -8px rgba(0,0,0,.5); }
+
+    /* --- day header & cards --- */
+    .day .cnt { background: var(--glass); border: 1px solid var(--glass-border); }
+    .card {
+      border-radius: 20px; background: var(--glass); border-color: var(--glass-border);
+      box-shadow: var(--glass-hl), 0 4px 24px rgba(0,0,0,.18);
+      transition: transform .35s var(--spring), box-shadow .35s, border-color .3s;
+    }
+    [data-theme="light"] .card { box-shadow: var(--glass-hl), 0 4px 20px rgba(0,0,0,.06); }
+    @media (hover: hover) {
+      .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent) 40%, transparent); box-shadow: var(--glass-hl), 0 12px 34px rgba(0,0,0,.28); }
+      [data-theme="light"] .card:hover { box-shadow: var(--glass-hl), 0 12px 30px rgba(0,0,0,.1); }
+    }
+    .card .thumb { margin: 6px 6px 0; border-radius: 15px; }
+    .card .meta { padding: 10px 13px 13px; }
+    .card.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), 0 10px 30px -10px var(--accent); }
+    .tag, .seq { border-radius: 999px; background: rgba(14,14,14,.5); border-color: rgba(255,255,255,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.15); -webkit-backdrop-filter: blur(14px) saturate(180%); backdrop-filter: blur(14px) saturate(180%); }
+    .seq { padding: 0 8px; }
+    .skel { border-radius: 20px; }
+    .empty .ring { border-radius: 26px; background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-hl); }
+
+    /* --- floating selection bar --- */
+    .selbar {
+      border-radius: 999px; background: var(--glass-strong); border-color: var(--glass-border);
+      -webkit-backdrop-filter: var(--blur-strong); backdrop-filter: var(--blur-strong);
+      box-shadow: 0 16px 48px rgba(0,0,0,.4), var(--glass-hl-strong);
+    }
+    [data-theme="light"] .selbar { box-shadow: 0 16px 40px rgba(0,0,0,.12), var(--glass-hl-strong); }
+
+    /* --- sheet --- */
+    .overlay { background: rgba(0,0,0,.35); -webkit-backdrop-filter: blur(10px) saturate(140%); backdrop-filter: blur(10px) saturate(140%); }
+    .sheet {
+      background: var(--glass-sheet); border-color: var(--glass-border);
+      -webkit-backdrop-filter: var(--blur-strong); backdrop-filter: var(--blur-strong);
+      box-shadow: var(--glass-hl-strong), 0 -12px 60px rgba(0,0,0,.4);
+      border-radius: 30px 30px 0 0; animation-timing-function: var(--spring); animation-duration: .45s;
+    }
+    @media (min-width: 640px) { .sheet { border-radius: 28px; box-shadow: var(--glass-hl-strong), 0 24px 64px rgba(0,0,0,.45); } }
+    .sheet-head .btn.icon { background: var(--glass); }
+    .preview { border-radius: 20px; border-color: var(--glass-border); }
+    .preview .rot { background: rgba(14,14,14,.5); border-color: rgba(255,255,255,.2); box-shadow: inset 0 1px 0 rgba(255,255,255,.15); }
+    .type { border-radius: 20px; background: var(--glass); border-color: var(--glass-border); box-shadow: var(--glass-hl); transition: all .3s var(--spring); }
+    .type:hover { transform: translateY(-1px); }
+    .type .ic { border-radius: 50%; width: 32px; height: 32px; }
+    .type[aria-checked="true"] { box-shadow: var(--glass-hl), 0 8px 24px -10px var(--c); }
+    .filename { border-radius: 20px; background: var(--glass); box-shadow: var(--glass-hl); }
+    .filename .fi { border-radius: 50%; }
+    .sheet-actions .btn { border-radius: 999px; }
+    #billDate, #billNote { padding-left: 18px; }
+
+    /* --- viewer --- */
+    #viewer .btn { background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04)); border-color: rgba(255,255,255,.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.14); }
+    #viewer .btn.primary { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 82%, #fff), var(--accent)); color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 70%, #fff); box-shadow: inset 0 1px 0 rgba(255,255,255,.45); }
+    #viewer .btn.nav, #viewer .btn.round { background: rgba(20,20,20,.5); -webkit-backdrop-filter: blur(16px) saturate(180%); backdrop-filter: blur(16px) saturate(180%); }
+    #viewer .vpanel {
+      border-radius: 30px; background: linear-gradient(180deg, rgba(34,34,34,.7), rgba(16,16,16,.8));
+      border-color: rgba(255,255,255,.12); -webkit-backdrop-filter: blur(32px) saturate(190%); backdrop-filter: blur(32px) saturate(190%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 20px 60px rgba(0,0,0,.5);
+    }
+    #viewer .vacts .btn { border-radius: 999px; }
+    #viewer .pill { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.08); }
+
+    /* --- login card --- */
+    .login-card {
+      border-radius: 30px; background: var(--glass-strong); border-color: var(--glass-border);
+      -webkit-backdrop-filter: var(--blur-strong); backdrop-filter: var(--blur-strong);
+      box-shadow: var(--glass-hl-strong), 0 24px 64px rgba(0,0,0,.45);
+    }
+    [data-theme="light"] .login-card { box-shadow: var(--glass-hl-strong), 0 24px 64px rgba(0,0,0,.12); }
+    .login-head .logo { border-radius: 50%; }
+    .login-card .btn.primary { border-radius: 999px; }
+
+    /* --- toast --- */
+    #toast {
+      background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(240,240,240,.9)); color: #0a0a0a;
+      border: 1px solid rgba(255,255,255,.6); box-shadow: inset 0 1px 0 #fff, 0 14px 40px -8px rgba(0,0,0,.5);
+      -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    }
+    [data-theme="light"] #toast { background: linear-gradient(180deg, rgba(30,30,30,.92), rgba(14,14,14,.94)); color: #fafafa; border-color: rgba(255,255,255,.1); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 14px 40px -8px rgba(0,0,0,.35); }
+    #toast.err { background: linear-gradient(180deg, color-mix(in srgb, var(--danger) 88%, #fff), var(--danger)); color: #fff; border-color: transparent; }
   </style>
 </head>
 
